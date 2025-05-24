@@ -9,7 +9,7 @@
 #  port: 8080
 #spring:
 #  datasource:
-#    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/bank_database?currentSchema=auth_service}
+#    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/bank_database?currentSchema=asc_service}
 #    username: ${DATABASE_USERNAME:postgres}
 #    password: ${DATABASE_PASSWORD:postgres}
 #    driver-class-name: org.postgresql.Driver
@@ -19,8 +19,7 @@
 #  liquibase:
 #    enabled: true
 #    change-log: classpath:db/changelog/releases/db.changelog-master.yaml
-#    default-schema: ${APP_POSTGRESQL_SCHEMA:auth_service}
-#jwt:
-#  secret: ${JWT_ACCESS_SECRET:"luAUigPkQylTDBN0J58GVnKVgfhi+T2oOitIk6u8/HqGVBOxuJFANQD5OHPVKHdxsdxIUiNyIRh18PvzCCdGRQ=="}
+#    default-schema: ${APP_POSTGRESQL_SCHEMA:asc_service}
+
 
 
