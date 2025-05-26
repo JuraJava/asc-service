@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-repair-request
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: repair_request
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    autoIncrement: true
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date_of_creation
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type_of_repair
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_of_device
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: serial_number_of_device
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: id_of_device
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_sale_of_device
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: true
+              - column:
+                  name: reported_defect
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: appearance_of_device
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cost_of_repair
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name_first_name_of_consumer
+                  type: VARCHAR(80)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patronymic_of_consumer
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: address_of_consumer
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number_of_consumer
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name_of_service_center
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number_of_service_center
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address_of_service_center
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_employee_who_accepted_request
+                  type: BIGINT
+                  constraints:
+                    nullable: false

@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-work-order
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: work_order
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    autoIncrement: true
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: id_repair_request
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_creation_work_order
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: repair_status
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_status
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completed_works
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: replaced_spare_parts
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: cost_of_spare_all_parts
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: cost_of_work_performed
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cost_of_additional_work_performed
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: total_cost_of_work_order
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: salary_for_employee_on_this_order
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_of_employee_who_performed_repair
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_completion_of_repairs
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: true
