@@ -21,5 +21,3 @@ spring:
     change-log: classpath:db/changelog/releases/db.changelog-master.yaml
     default-schema: ${APP_POSTGRESQL_SCHEMA:database_asc}
 
-
-
