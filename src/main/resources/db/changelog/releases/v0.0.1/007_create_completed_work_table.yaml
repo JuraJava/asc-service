@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007-create-completed-work
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: completed_work
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    autoIncrement: true
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name_work
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: cost_of_work
+                  type: DECIMAL (8,2)
+                  constraints:
+                    nullable: false
