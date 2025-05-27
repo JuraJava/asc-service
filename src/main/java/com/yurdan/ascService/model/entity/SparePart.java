@@ -20,8 +20,8 @@ public class SparePart {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "spare_part_batch_number", nullable = false, unique = true)
-    private String sparePartBatchNumber;
+    @Column(name = "batch_number_spare_part", nullable = false, unique = true)
+    private String batch_number_spare_part;
 
     @Column(name = "number_of_remaining_spare_part")
     private Long numberOfRemainingSparePart;

@@ -33,6 +33,7 @@ public class RepairRequest {
 
     @Column(name = "id_of_device", nullable = false)
     private Long idOfDevice;
+//    private Device idOfDevice;
 
     @Column(name = "serial_number_of_device", nullable = false, unique = true)
     private String serialNumberOfDevice;
@@ -72,5 +73,6 @@ public class RepairRequest {
 
     @Column(name = "id_employee_who_accepted_request", nullable = false)
     private Long idEmployeeWhoAcceptedRequest;
+//    private Employee idEmployeeWhoAcceptedRequest;
 
 }

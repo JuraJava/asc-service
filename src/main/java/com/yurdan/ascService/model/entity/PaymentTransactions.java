@@ -38,7 +38,7 @@ public class PaymentTransactions {
     @Column(name = "executed_at", nullable = false)
     private LocalDateTime executedAt;
 
-    @Column(name = "id_employee_who_accepted_payment", nullable = false)
+    @Column(name = "id_of_employee_who_accepted_payment", nullable = false)
     private Long idOfEmployeeWhoAcceptedPayment;
 
 }

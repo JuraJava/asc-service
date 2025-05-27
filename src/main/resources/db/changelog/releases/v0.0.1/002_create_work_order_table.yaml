@@ -34,17 +34,17 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: completed_work
+                  name: name_of_completed_work
                   type: VARCHAR(48)
                   constraints:
                     nullable: false
               - column:
-                  name: replaced_spare_parts
+                  name: batch_number_replaced_spare_part
                   type: VARCHAR(48)
                   constraints:
                     nullable: true
               - column:
-                  name: cost_of_spare_all_parts
+                  name: cost_of_all_spare_parts
                   type: DECIMAL (8,2)
                   constraints:
                     nullable: true
@@ -74,7 +74,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: date_of_completion_of_repairs
+                  name: date_of_completion_of_repair
                   type: TIMESTAMP
                   constraints:
                     nullable: true

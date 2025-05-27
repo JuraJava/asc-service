@@ -28,3 +28,8 @@ databaseChangeLog:
                   type: VARCHAR(24)
                   constraints:
                     nullable: false
+              - column:
+                  name: share_of_employee_of_cost_of_completed_work
+                  type: INTEGER
+                  constraints:
+                    nullable: true

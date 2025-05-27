@@ -20,8 +20,8 @@ public class CompletedWork {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name_work", nullable = false, unique = true)
-    private String nameWork;
+    @Column(name = "name_of_work", nullable = false, unique = true)
+    private String nameOfWork;
 
     @Column(name = "cost_of_work", nullable = false)
     private BigDecimal costOfWork;
@@ -33,3 +33,4 @@ public class CompletedWork {
 //UNBLOCKING
 //REPLACEMENT_UNDER_WARRANTY
 //REPLACEMENT_ON_PAID_BASIS
+//additional work

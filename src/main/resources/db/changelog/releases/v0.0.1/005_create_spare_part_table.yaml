@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: spare_part_batch_number
+                  name: batch_number_spare_part
                   type: VARCHAR(16)
                   constraints:
                     nullable: false

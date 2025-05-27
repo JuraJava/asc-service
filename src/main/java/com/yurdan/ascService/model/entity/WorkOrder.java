@@ -1,6 +1,5 @@
 package com.yurdan.ascService.model.entity;
 
-import com.yurdan.ascService.model.enums.CompletedWork;
 import com.yurdan.ascService.model.enums.PaymentStatus;
 import com.yurdan.ascService.model.enums.RepairStatus;
 import jakarta.persistence.*;
@@ -27,6 +26,7 @@ public class WorkOrder {
 
     @Column(name = "id_repair_request", nullable = false)
     private Long idRepairRequest;
+//    private RepairRequest idRepairRequest;
 
     @CreationTimestamp
 //    Чтобы дата автоматически проставлялась при изменении сущности
@@ -39,31 +39,37 @@ public class WorkOrder {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "completed_work", nullable = false)
-    private CompletedWork completedWork;
+    @Column(name = "name_of_completed_work", nullable = false)
+    private String nameOfCompletedWork;
+//    private CompletedWork nameOfCompletedWork;
 
-    @Column(name = "replaced_spare_parts")
-    private String replacedSpareParts;
+    @Column(name = "batch_number_replaced_spare_part")
+    private String batchNumberReplacedSparePart;
+//    private SparePart batchNumberReplacedSparePart;
 
-    @Column(name = "cost_of_spare_all_parts")
-    private BigDecimal costOfSpareAllParts;
+    @Column(name = "cost_of_all_spare_parts")
+    private BigDecimal costOfAllSpareParts;
 
     @Column(name = "cost_of_work_performed", nullable = false)
     private BigDecimal costOfWorkPerformed;
+//    private CompletedWork costOfWorkPerformed;
 
     @Column(name = "cost_of_additional_work_performed")
     private BigDecimal costOfAdditionalWorkPerformed;
+//    private CompletedWork costOfAdditionalWorkPerformed;
 
     @Column(name = "total_cost_of_work_order", nullable = false)
     private BigDecimal totalCostOfWorkOrder;
 
     @Column(name = "salary_for_employee_on_this_order", nullable = false)
     private BigDecimal salaryForEmployeeOnThisOrder;
+//    private CompletedWork salaryForEmployeeOnThisOrder;
 
     @Column(name = "id_of_employee_who_performed_repair", nullable = false)
     private Long idOfEmployeeWhoPerformedRepair;
+//    private Employee idOfEmployeeWhoPerformedRepair;
 
-    @Column(name = "date_of_completion_of_repairs")
-    private LocalDateTime dateOfCompletionOfRepairs;
+    @Column(name = "date_of_completion_of_repair")
+    private LocalDateTime dateOfCompletionOfRepair;
 
 }

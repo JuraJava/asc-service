@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name_work
+                  name: name_of_work
                   type: VARCHAR(32)
                   constraints:
                     nullable: false

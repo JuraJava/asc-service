@@ -28,4 +28,9 @@ public class Employee {
     @Column(name = "role_of_employee", nullable = false)
     private RoleOfEmployee roleOfEmployee;
 
+    @Column(name = "share_of_employee_of_cost_of_completed_work")
+    private int shareOfEmployeeOfCostOfCompletedWork;
+
+
+
 }
