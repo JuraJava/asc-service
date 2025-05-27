@@ -64,6 +64,7 @@ public class WorkOrder {
     @Column(name = "salary_for_employee_on_this_order", nullable = false)
     private BigDecimal salaryForEmployeeOnThisOrder;
 //    private CompletedWork salaryForEmployeeOnThisOrder;
+//    private Employee salaryForEmployeeOnThisOrder;
 
     @Column(name = "id_of_employee_who_performed_repair", nullable = false)
     private Long idOfEmployeeWhoPerformedRepair;
