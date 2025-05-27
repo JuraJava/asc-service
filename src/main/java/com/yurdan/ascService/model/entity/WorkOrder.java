@@ -1,6 +1,6 @@
 package com.yurdan.ascService.model.entity;
 
-import com.yurdan.ascService.model.enums.CompletedWorks;
+import com.yurdan.ascService.model.enums.CompletedWork;
 import com.yurdan.ascService.model.enums.PaymentStatus;
 import com.yurdan.ascService.model.enums.RepairStatus;
 import jakarta.persistence.*;
@@ -38,8 +38,8 @@ public class WorkOrder {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "completed_works", nullable = false)
-    private CompletedWorks completedWorks;
+    @Column(name = "completed_work", nullable = false)
+    private CompletedWork completedWork;
 
     @Column(name = "replaced_spare_parts")
     private String replacedSpareParts;

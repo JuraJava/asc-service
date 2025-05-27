@@ -1,6 +1,6 @@
 package com.yurdan.ascService.model.enums;
 
-public enum CompletedWorks {
+public enum CompletedWork {
     DIAGNOSTICS,
     PROGRAM_REPAIR,
     UNBLOCKING,
