@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-create-device
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: device
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    autoIncrement: true
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: device_name
+                  type: VARCHAR(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_color
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false

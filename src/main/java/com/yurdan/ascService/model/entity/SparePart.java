@@ -1,0 +1,34 @@
+package com.yurdan.ascService.model.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "spare_part")
+public class SparePart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "spare_part_batch_number", nullable = false, unique = true)
+    private String sparePartBatchNumber;
+
+    @Column(name = "number_of_remaining_spare_part")
+    private Long numberOfRemainingSparePart;
+
+    @Column(name = "cost_of_spare_part", nullable = false)
+    private BigDecimal costOfSparePart;
+
+    @Column(name = "id_of_device_for_which_spare_part_is_use", nullable = false)
+    private Long idOfDeviceForWhichSparePartIsUse;
+}

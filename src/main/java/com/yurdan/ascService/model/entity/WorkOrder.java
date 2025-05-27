@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "work_order")
 public class WorkOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
