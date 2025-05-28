@@ -10,8 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,9 +32,11 @@ public class RepairRequest {
     @Column(name = "type_of_repair", nullable = false)
     private TypeOfRepair typeOfRepair;
 
-    @Column(name = "id_of_device", nullable = false)
-    private Long idOfDevice;
-//    private Device idOfDevice;
+//    @Column(name = "id_of_device", nullable = false)
+//    private Long idOfDevice;
+    @ManyToOne
+    @JoinColumn(name = "id_of_device")
+    private Device idOfDevice;
 
     @Column(name = "serial_number_of_device", nullable = false, unique = true)
     private String serialNumberOfDevice;
@@ -71,8 +74,13 @@ public class RepairRequest {
     @Column(name = "address_of_service_center", nullable = false)
     private String addressOfServiceCenter;
 
-    @Column(name = "id_employee_who_accepted_request", nullable = false)
-    private Long idEmployeeWhoAcceptedRequest;
-//    private Employee idEmployeeWhoAcceptedRequest;
+//    @Column(name = "id_employee_who_accepted_request", nullable = false)
+//    private Long idEmployeeWhoAcceptedRequest;
+    @ManyToOne
+    @JoinColumn (name = "id_of_employee_who_accepted_request")
+    private Employee idOfEmployeeWhoAcceptedRequest;
+
+    @OneToMany(mappedBy = "repair_request", cascade = CascadeType.ALL)
+    private List<WorkOrder> workOrders;
 
 }

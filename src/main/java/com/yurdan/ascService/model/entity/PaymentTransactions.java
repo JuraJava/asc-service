@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,7 +38,10 @@ public class PaymentTransactions {
     @Column(name = "executed_at", nullable = false)
     private LocalDateTime executedAt;
 
-    @Column(name = "id_of_employee_who_accepted_payment", nullable = false)
-    private Long idOfEmployeeWhoAcceptedPayment;
+//    @Column(name = "id_of_employee_who_accepted_payment", nullable = false)
+//    private Long idOfEmployeeWhoAcceptedPayment;
+    @ManyToOne
+    @JoinColumn(name = "id_of_employee_who_accepted_payment")
+    private Employee idOfEmployeeWhoAcceptedPayment;
 
 }

@@ -28,6 +28,9 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_repair_device
+                    referencedTableName: device
+                    referencedColumnNames: id
               - column:
                   name: serial_number_of_device
                   type: VARCHAR(16)
@@ -90,7 +93,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: id_employee_who_accepted_request
+                  name: id_of_employee_who_accepted_request
                   type: BIGINT
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_repair_employee
+                    referencedTableName: employee
+                    referencedColumnNames: id

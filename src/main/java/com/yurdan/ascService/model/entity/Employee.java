@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -31,6 +33,13 @@ public class Employee {
     @Column(name = "share_of_employee_of_cost_of_completed_work")
     private int shareOfEmployeeOfCostOfCompletedWork;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Employee> employeesWhoAcceptedRequest;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Employee> employeesWhoPerformedRepair;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Employee> employeesWhoAcceptedPayment;
 
 }
