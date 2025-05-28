@@ -9,7 +9,7 @@ server:
   port: 8080
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/bank_database?currentSchema=database_asc}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/database_asc?currentSchema=public}
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
@@ -19,5 +19,5 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/releases/db.changelog-master.yaml
-    default-schema: ${APP_POSTGRESQL_SCHEMA:database_asc}
+    default-schema: ${APP_POSTGRESQL_SCHEMA:public}
 
