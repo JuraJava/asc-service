@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -79,7 +79,11 @@ public class WorkOrder {
     @ManyToOne
     @JoinColumn(name = "salary_for_employee_on_this_order")
     private CompletedWork salaryForEmployeeOnThisOrder;
+
+//    @ManyToOne
+//    @JoinColumn(name = "salary_for_employee_on_this_order")
 //    private Employee salaryForEmployeeOnThisOrder;
+
 
 //    @Column(name = "id_of_employee_who_performed_repair", nullable = false)
 //    private Long idOfEmployeeWhoPerformedRepair;

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -65,14 +65,14 @@ public class RepairRequest {
     @Column(name = "phone_number_of_consumer", nullable = false)
     private String phoneNumberOfConsumer;
 
-    @Column(name = "name_of_service_center", nullable = false)
-    private String nameOfServiceCenter;
-
-    @Column(name = "phone_number_of_service_center", nullable = false)
-    private String phoneNumberOfServiceCenter;
-
-    @Column(name = "address_of_service_center", nullable = false)
-    private String addressOfServiceCenter;
+//    @Column(name = "name_of_service_center", nullable = false)
+//    private String nameOfServiceCenter;
+//
+//    @Column(name = "phone_number_of_service_center", nullable = false)
+//    private String phoneNumberOfServiceCenter;
+//
+//    @Column(name = "address_of_service_center", nullable = false)
+//    private String addressOfServiceCenter;
 
 //    @Column(name = "id_employee_who_accepted_request", nullable = false)
 //    private Long idEmployeeWhoAcceptedRequest;
