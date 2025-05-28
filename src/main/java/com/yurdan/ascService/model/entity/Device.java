@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +26,7 @@ public class Device {
 
     @Column(name = "device_color", nullable = false)
     private DeviceColor deviceColor;
+
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    private List<Device> devices;
 }
