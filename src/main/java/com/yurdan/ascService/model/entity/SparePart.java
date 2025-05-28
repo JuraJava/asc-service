@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,4 +33,11 @@ public class SparePart {
 
     @Column(name = "id_of_device_for_which_spare_part_is_use", nullable = false)
     private Long idOfDeviceForWhichSparePartIsUse;
+
+    @OneToMany(mappedBy = "spare_part", cascade = CascadeType.ALL)
+    private List<SparePart> costs_of_spare_part;
+
+    @OneToMany(mappedBy = "spare_part", cascade = CascadeType.ALL)
+    private List<SparePart> batch_numbers_spare_part;
+
 }

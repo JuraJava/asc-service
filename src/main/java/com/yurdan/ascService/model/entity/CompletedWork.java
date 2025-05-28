@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +26,18 @@ public class CompletedWork {
 
     @Column(name = "cost_of_work", nullable = false)
     private BigDecimal costOfWork;
+
+    @OneToMany(mappedBy = "completed_work", cascade = CascadeType.ALL)
+    private List<CompletedWork> namesOfCompletedWork;
+
+    @OneToMany(mappedBy = "completed_work", cascade = CascadeType.ALL)
+    private List<CompletedWork> works_performed;
+
+    @OneToMany(mappedBy = "completed_work", cascade = CascadeType.ALL)
+    private List<CompletedWork> additional_works_performed;
+
+    @OneToMany(mappedBy = "completed_work", cascade = CascadeType.ALL)
+    private List<CompletedWork> salariesForEmployeeOnThisOrder;
 
 }
 

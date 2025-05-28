@@ -42,4 +42,7 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Employee> employeesWhoAcceptedPayment;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Employee> sharesOfEmployeeOfCostOfCompletedWork;
+
 }
