@@ -9,28 +9,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-//@Entity
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Table(name = "device")
-//public class Device {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private Long id;
-//
-//    @Column(name = "device_name", nullable = false)
-//    private String deviceName;
-//
-//    @Column(name = "device_color", nullable = false)
-//    private DeviceColor deviceColor;
-//
-//    @OneToMany(mappedBy = "idOfDevice", cascade = CascadeType.ALL)
-//    private List<Device> devices;
-//}
-
 @Entity
 @Getter
 @Setter

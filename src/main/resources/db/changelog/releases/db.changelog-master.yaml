@@ -1,3 +1,19 @@
+#databaseChangeLog:
+#  - includeAll:
+#      path: db/changelog/releases/v0.0.1
+
 databaseChangeLog:
-  - includeAll:
-      path: db/changelog/releases/v0.0.1
+  - include:
+      file: db/changelog/releases/v0.0.1/001-create-repair-request.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/002-create-work-order.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/003-create-payment-transactions.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/004-create-employee.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/005-create-spare-part.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/006-create-device.yaml
+  - include:
+      file: db/changelog/releases/v0.0.1/007-create-completed-work.yaml
