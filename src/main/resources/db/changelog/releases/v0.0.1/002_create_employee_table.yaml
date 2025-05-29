@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 004-create-employee
+      id: 002-create-employee
       author: Yuri Danilov
       changes:
         - createTable:

@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 003-create-payment-transactions
+      id: 006-create-spare-part
       author: Yuri Danilov
       changes:
         - createTable:
-            tableName: payment_transactions
+            tableName: spare_part
             columns:
               - column:
                   name: id
@@ -14,30 +14,23 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: amount
+                  name: batch_number_spare_part
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: number_of_remaining_spare_part
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: cost_of_spare_part
                   type: DECIMAL(8,2)
                   constraints:
                     nullable: false
               - column:
-                  name: type_of_payment
-                  type: VARCHAR(16)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: currency
-                  type: VARCHAR(3)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: executed_at
-                  type: TIMESTAMP
-                  constraints:
-                    nullable: false
-              - column:
-                  name: id_of_employee_who_accepted_payment
+                  name: id_of_device_for_which_spare_part_is_use
                   type: BIGINT
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_payment_employee
-                    referencedTableName: employee
-                    referencedColumnNames: id

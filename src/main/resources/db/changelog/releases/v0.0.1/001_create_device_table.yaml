@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 006-create-device
+      id: 001-create-device
       author: Yuri Danilov
       changes:
         - createTable:

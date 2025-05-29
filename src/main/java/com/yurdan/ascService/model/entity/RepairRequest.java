@@ -1,6 +1,7 @@
 package com.yurdan.ascService.model.entity;
 
 import com.yurdan.ascService.model.enums.TypeOfRepair;
+import com.yurdan.ascService.util.ServiceCenterInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -64,6 +65,28 @@ public class RepairRequest {
     @Column(name = "phone_number_of_consumer", nullable = false)
     private String customerPhone;
 
+    @ManyToOne
+    @JoinColumn(name = "id_of_employee_who_accepted_request", nullable = false)
+    private Employee acceptedBy;
+
+    @OneToMany(mappedBy = "repairRequest", cascade = CascadeType.ALL)
+    private List<WorkOrder> workOrders;
+
+    @Transient
+    public String getNameOfServiceCenter() {
+        return ServiceCenterInfo.NAME;
+    }
+
+    @Transient
+    public String getPhoneNumberOfServiceCenter() {
+        return ServiceCenterInfo.PHONE_NUMBER;
+    }
+
+    @Transient
+    public String getAddressOfServiceCenter() {
+        return ServiceCenterInfo.ADDRESS;
+    }
+
 //    @Column(name = "name_of_service_center", nullable = false)
 //    private String nameOfServiceCenter;
 //
@@ -73,10 +96,4 @@ public class RepairRequest {
 //    @Column(name = "address_of_service_center", nullable = false)
 //    private String addressOfServiceCenter;
 
-    @ManyToOne
-    @JoinColumn(name = "id_of_employee_who_accepted_request", nullable = false)
-    private Employee acceptedBy;
-
-    @OneToMany(mappedBy = "repairRequest", cascade = CascadeType.ALL)
-    private List<WorkOrder> workOrders;
 }
