@@ -25,45 +25,44 @@ public class RepairRequest {
     private Long id;
 
     @CreationTimestamp
-//    Чтобы дата автоматически проставлялась при изменении сущности
+    //    Чтобы дата автоматически проставлялась при изменении сущности
     @Column(name = "date_of_creation", nullable = false)
-    private LocalDateTime dateOfCreation;
+    private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type_of_repair", nullable = false)
     private TypeOfRepair typeOfRepair;
 
-//    @Column(name = "id_of_device", nullable = false)
-//    private Long idOfDevice;
     @ManyToOne
-    @JoinColumn(name = "id_of_device")
-    private Device idOfDevice;
+    @JoinColumn(name = "id_of_device", nullable = false)
+    private Device device;
 
     @Column(name = "serial_number_of_device", nullable = false, unique = true)
-    private String serialNumberOfDevice;
+    private String serialNumber;
 
     @Column(name = "date_of_sale_of_device")
-    private LocalDateTime dateOfSaleOfDevice;
+    private LocalDateTime saleDate;
 
     @Column(name = "reported_defect", nullable = false)
-    private String reportedDefect;
+    private String defect;
 
     @Column(name = "appearance_of_device", nullable = false)
-    private String appearanceOfDevice;
+    private String appearance;
 
     @Column(name = "cost_of_repair", nullable = false)
-    private BigDecimal costOfRepair;
+    private BigDecimal cost;
 
     @Column(name = "last_name_first_name_of_consumer", nullable = false)
-    private String lastNameFirstNameOfConsumer;
+    private String customerFullName;
 
     @Column(name = "patronymic_of_consumer")
-    private String patronymicOfConsumer;
+    private String customerPatronymic;
 
     @Column(name = "address_of_consumer", nullable = false)
-    private String addressOfConsumer;
+    private String customerAddress;
 
     @Column(name = "phone_number_of_consumer", nullable = false)
-    private String phoneNumberOfConsumer;
+    private String customerPhone;
 
 //    @Column(name = "name_of_service_center", nullable = false)
 //    private String nameOfServiceCenter;
@@ -74,13 +73,10 @@ public class RepairRequest {
 //    @Column(name = "address_of_service_center", nullable = false)
 //    private String addressOfServiceCenter;
 
-//    @Column(name = "id_employee_who_accepted_request", nullable = false)
-//    private Long idEmployeeWhoAcceptedRequest;
     @ManyToOne
-    @JoinColumn (name = "id_of_employee_who_accepted_request")
-    private Employee idOfEmployeeWhoAcceptedRequest;
+    @JoinColumn(name = "id_of_employee_who_accepted_request", nullable = false)
+    private Employee acceptedBy;
 
-    @OneToMany(mappedBy = "repair_request", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "repairRequest", cascade = CascadeType.ALL)
     private List<WorkOrder> workOrders;
-
 }

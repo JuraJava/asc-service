@@ -27,21 +27,22 @@ public class PaymentTransactions {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type_of_payment", nullable = false)
-    private TypeOfPayment typeOfPayment;
+    private TypeOfPayment type;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false)
     private Currencies currency;
 
     @CreationTimestamp
-//    Чтобы дата автоматически проставлялась при изменении сущности
+    //    Чтобы дата автоматически проставлялась при изменении сущности
     @Column(name = "executed_at", nullable = false)
     private LocalDateTime executedAt;
 
-//    @Column(name = "id_of_employee_who_accepted_payment", nullable = false)
-//    private Long idOfEmployeeWhoAcceptedPayment;
     @ManyToOne
-    @JoinColumn(name = "id_of_employee_who_accepted_payment")
-    private Employee idOfEmployeeWhoAcceptedPayment;
-
+    @JoinColumn(name = "id_of_employee_who_accepted_payment", nullable = false)
+    private Employee acceptedBy;
 }
+
+

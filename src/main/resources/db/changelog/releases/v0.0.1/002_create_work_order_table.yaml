@@ -41,41 +41,26 @@ databaseChangeLog:
                   type: VARCHAR(48)
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_work_order_completed_work
-                    referencedTableName: completed_work
-                    referencedColumnNames: name_of_work
               - column:
                   name: batch_number_replaced_spare_part
                   type: VARCHAR(48)
                   constraints:
                     nullable: true
-                    foreignKeyName: fk_work_order_spare_part
-                    referencedTableName: spare_part
-                    referencedColumnNames: batch_number_spare_part
               - column:
                   name: cost_of_spare_part
                   type: DECIMAL (8,2)
                   constraints:
                     nullable: true
-                    foreignKeyName: fk_work_order_spare_part
-                    referencedTableName: spare_part
-                    referencedColumnNames: cost_of_spare_part
               - column:
                   name: cost_of_work_performed
                   type: DECIMAL (8,2)
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_work_order_completed_work
-                    referencedTableName: completed_work
-                    referencedColumnNames: cost_of_work
               - column:
                   name: cost_of_additional_work_performed
                   type: DECIMAL (8,2)
                   constraints:
                     nullable: true
-                    foreignKeyName: fk_work_order_completed_work
-                    referencedTableName: completed_work
-                    referencedColumnNames: cost_of_work
               - column:
                   name: total_cost_of_work_order
                   type: DECIMAL (8,2)
@@ -86,12 +71,6 @@ databaseChangeLog:
                   type: DECIMAL (8,2)
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_work_order_employee
-                    referencedTableName: employee
-                    referencedColumnNames: share_of_employee_of_cost_of_completed_work
-#                    foreignKeyName: fk_work_order_completed_work
-#                    referencedTableName: completed_work
-#                    referencedColumnNames: cost_of_work
               - column:
                   name: id_of_employee_who_performed_repair
                   type: BIGINT
