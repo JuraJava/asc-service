@@ -48,27 +48,27 @@ databaseChangeLog:
                     nullable: true
               - column:
                   name: cost_of_spare_part
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: true
               - column:
                   name: cost_of_work_performed
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: false
               - column:
                   name: cost_of_additional_work_performed
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: true
               - column:
                   name: total_cost_of_work_order
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: false
               - column:
                   name: salary_for_employee_on_this_order
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: false
               - column:

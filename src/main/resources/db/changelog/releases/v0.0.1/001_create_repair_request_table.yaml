@@ -54,7 +54,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: cost_of_repair
-                  type: DECIMAL (8,2)
+                  type: DECIMAL(8,2)
                   constraints:
                     nullable: false
               - column:
