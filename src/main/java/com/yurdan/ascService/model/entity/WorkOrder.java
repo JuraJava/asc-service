@@ -30,7 +30,7 @@ public class WorkOrder {
 
     @CreationTimestamp
     //    Чтобы дата автоматически проставлялась при изменении сущности
-    @Column(name = "date_of_creation_work_order", nullable = false)
+    @Column(name = "date_creation_work_order", nullable = false)
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
@@ -41,31 +41,31 @@ public class WorkOrder {
     @Column(name = "payment_status", nullable = false)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "name_of_completed_work", nullable = false)
+    @Column(name = "name_completed_work", nullable = false)
     private String completedWorkName;
 
-    @Column(name = "batch_number_replaced_spare_part")
+    @Column(name = "batch_number_replaced_part")
     private String batchNumber;
 
-    @Column(name = "cost_of_spare_part")
+    @Column(name = "cost_replaced_part")
     private BigDecimal costOfSparePart;
 
-    @Column(name = "cost_of_work_performed", nullable = false)
+    @Column(name = "cost_performed_work", nullable = false)
     private BigDecimal costOfWork;
 
-    @Column(name = "cost_of_additional_work_performed")
+    @Column(name = "cost_additional_performed_work")
     private BigDecimal costOfAdditionalWork;
 
-    @Column(name = "total_cost_of_work_order", nullable = false)
+    @Column(name = "total_cost_work_order", nullable = false)
     private BigDecimal totalCost;
 
-    @Column(name = "salary_for_employee_on_this_order", nullable = false)
+    @Column(name = "salary_for_this_order", nullable = false)
     private BigDecimal salary;
 
     @ManyToOne
-    @JoinColumn(name = "id_of_employee_who_performed_repair", nullable = false)
+    @JoinColumn(name = "id_employee_who_performed", nullable = false)
     private Employee performedBy;
 
-    @Column(name = "date_of_completion_of_repair")
+    @Column(name = "date_completion_repair")
     private LocalDateTime completedAt;
 }

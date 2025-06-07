@@ -20,16 +20,16 @@ public class SparePart {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "batch_number_spare_part", nullable = false, unique = true)
+    @Column(name = "batch_number_part", nullable = false, unique = true)
     private String batchNumber;
 
-    @Column(name = "number_of_remaining_spare_part")
+    @Column(name = "remaining_quantity")
     private Long remainingQuantity;
 
-    @Column(name = "cost_of_spare_part", nullable = false)
+    @Column(name = "cost_spare_part", nullable = false)
     private BigDecimal cost;
 
     @ManyToOne
-    @JoinColumn(name = "id_of_device_for_which_spare_part_is_use", nullable = false)
+    @JoinColumn(name = "id_device_that_uses_this_part", nullable = false)
     private Device device;
 }
