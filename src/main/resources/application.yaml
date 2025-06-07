@@ -1,29 +1,6 @@
-#spring.datasource.url=jdbc:postgresql://localhost:5432/database_asc
-#spring.datasource.username=postgres
-#spring.datasource.password=postgres
-#spring.jpa.hibernate.ddl-auto=none
-#spring.liquibase.change-log=classpath:db/changelog/releases/db.changelog-master.yaml
-#jwt.secret=MySuperSecretKey12345
-
-#Hibernate properties
-#spring.jpa.properties.hibernate.show_sql=true
-#spring.jpa.properties.hibernate.hbm2ddl.auto=update
-
-server:
-  port: 8080
-spring:
-  datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/database_asc?currentSchema:public}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: none
-  liquibase:
-    enabled: true
-    change-log: classpath:db/changelog/releases/db.changelog-master.yaml
-    default-schema: ${APP_POSTGRESQL_SCHEMA:public}
+# Если будет необходимо чтобы таблицы в БД создавались не через Liquibase,
+#  а чтобы Hibernate сам их создавал на основании уже заполненных в приложении сущностей
+#необходимо использовать такие настройки:
 
 #server:
 #  port: 8080
@@ -40,3 +17,23 @@ spring:
 #    properties:
 #      hibernate:
 #        format_sql: true
+
+server:
+  port: 8080
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/database_asc?currentSchema:public}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/releases/db.changelog-master.yaml
+    default_schema: ${APP_POSTGRESQL_SCHEMA:public}
+service_center:
+  name: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
+  phone_number: "89180038448"
+  address: "Sochi, Severnaya str., 6"

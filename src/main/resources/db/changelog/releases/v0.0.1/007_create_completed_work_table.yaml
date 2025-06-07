@@ -8,19 +8,19 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: BIGINT
+                  type: BIGSERIAL
                   constraints:
                     autoIncrement: true
                     primaryKey: true
                     nullable: false
               - column:
-                  name: name_of_work
+                  name: name_work
                   type: VARCHAR(32)
                   constraints:
                     nullable: false
                     unique: true
               - column:
-                  name: cost_of_work
+                  name: cost_work
                   type: DECIMAL(8,2)
                   constraints:
                     nullable: false

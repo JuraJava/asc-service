@@ -21,25 +21,27 @@ public class Employee {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "last_name_first_name_of_employee", nullable = false)
+    @Column(name = "full_name_employee", nullable = false)
     private String fullName;
 
-    @Column(name = "patronymic_of_employee")
+    @Column(name = "patronymic")
     private String patronymic;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_of_employee", nullable = false)
+    @Column(name = "role", nullable = false)
     private RoleOfEmployee role;
 
-    @Column(name = "share_of_employee_of_cost_of_completed_work")
-    private Integer shareOfWork;
+    @Column(name = "share_of_completed_work")
+    private Float shareOfWork;
 
+//    @OneToMany(mappedBy = "acceptedById")
     @OneToMany(mappedBy = "acceptedBy")
     private List<RepairRequest> acceptedRequests;
 
     @OneToMany(mappedBy = "performedBy")
     private List<WorkOrder> performedRepairs;
 
+//    @OneToMany(mappedBy = "acceptedById")
     @OneToMany(mappedBy = "acceptedBy")
     private List<PaymentTransactions> acceptedPayments;
 }

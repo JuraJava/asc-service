@@ -20,10 +20,10 @@ public class CompletedWork {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name_of_work", nullable = false, unique = true)
+    @Column(name = "name_work", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "cost_of_work", nullable = false)
+    @Column(name = "cost_work", nullable = false)
     private BigDecimal cost;
 }
 

@@ -8,28 +8,29 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: BIGINT
+                  type: BIGSERIAL
                   constraints:
                     autoIncrement: true
                     primaryKey: true
                     nullable: false
               - column:
-                  name: last_name_first_name_of_employee
+                  name: full_name_employee
                   type: VARCHAR(64)
                   constraints:
                     nullable: false
               - column:
-                  name: patronymic_of_employee
+                  name: patronymic
                   type: VARCHAR(48)
                   constraints:
                     nullable: true
               - column:
-                  name: role_of_employee
+                  name: role
                   type: VARCHAR(24)
                   constraints:
                     nullable: false
               - column:
-                  name: share_of_employee_of_cost_of_completed_work
-                  type: INTEGER
+                  name: share_of_completed_work
+                  type: FLOAT
+                  remarks: "Employee's share of the cost of the work performed"
                   constraints:
                     nullable: true

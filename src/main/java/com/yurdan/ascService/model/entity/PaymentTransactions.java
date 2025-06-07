@@ -28,7 +28,7 @@ public class PaymentTransactions {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_payment", nullable = false)
+    @Column(name = "type_payment", nullable = false)
     private TypeOfPayment type;
 
     @Enumerated(EnumType.STRING)
@@ -41,7 +41,7 @@ public class PaymentTransactions {
     private LocalDateTime executedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_of_employee_who_accepted_payment", nullable = false)
+    @JoinColumn(name = "id_employee_who_accepted_payment", nullable = false)
     private Employee acceptedBy;
 }
 
