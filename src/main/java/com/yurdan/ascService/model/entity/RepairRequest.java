@@ -2,10 +2,7 @@ package com.yurdan.ascService.model.entity;
 
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -43,7 +41,6 @@ public class RepairRequest {
     private String serialNumber;
 
     @Column(name = "date_sale")
-
     private LocalDate saleDate;
 
     @Column(name = "reported_defect", nullable = false)
@@ -75,15 +72,15 @@ public class RepairRequest {
     private List<WorkOrder> workOrders;
 
     //    @Value("${service_center.name}")
-    @Column(name = "service_center_name")
+    @Column(name = "service_center_name", nullable = false)
     private String nameOfServiceCenter;
 
     //    @Value("${service_center.phone_number}")
-    @Column(name = "service_center_phone_number")
+    @Column(name = "service_center_phone_number", nullable = false)
     private String phoneNumberOfServiceCenter;
 
     //    @Value("${service_center.address}")
-    @Column(name = "service_center_address")
+    @Column(name = "service_center_address", nullable = false)
     private String addressOfServiceCenter;
 
     public String getName() {

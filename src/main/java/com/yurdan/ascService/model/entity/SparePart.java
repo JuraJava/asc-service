@@ -1,14 +1,14 @@
 package com.yurdan.ascService.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,4 +32,7 @@ public class SparePart {
     @ManyToOne
     @JoinColumn(name = "id_device_that_uses_this_part", nullable = false)
     private Device device;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "spareParts")
+    private List<WorkOrder> workOrders;
 }

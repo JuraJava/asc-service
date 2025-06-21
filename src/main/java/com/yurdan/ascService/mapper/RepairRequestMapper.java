@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
 public interface RepairRequestMapper {
+
     // DTO → Entity
     @Mapping(source = "deviceId", target = "device", qualifiedByName = "mapDeviceById")
     @Mapping(source = "acceptedById", target = "acceptedBy", qualifiedByName = "mapEmployeeById")
@@ -16,11 +17,4 @@ public interface RepairRequestMapper {
     @Mapping(source = "device", target = "deviceId", qualifiedByName = "mapDeviceToId")
     @Mapping(source = "acceptedBy", target = "acceptedById", qualifiedByName = "mapEmployeeToId")
     RepairResponseDto toDto(RepairRequest entity);
-
 }
-
-//@Mapper(componentModel = "spring")
-//public interface RepairRequestMapper {
-//    RepairRequest toEntity(RepairRequestDto dto);
-//    RepairResponseDto toDto(RepairRequest entity);
-//}

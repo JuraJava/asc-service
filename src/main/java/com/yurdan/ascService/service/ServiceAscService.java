@@ -101,7 +101,6 @@ public class ServiceAscService {
         return repairRequestRepository.findAll(spec, pageable)
                 .map(repairRequestMapper::toDto);
     }
-
 }
 
 

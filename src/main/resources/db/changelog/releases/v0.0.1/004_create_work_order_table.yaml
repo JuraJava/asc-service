@@ -37,16 +37,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: name_completed_work
-                  type: VARCHAR(48)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: batch_number_replaced_part
-                  type: VARCHAR(48)
-                  constraints:
-                    nullable: true
-              - column:
                   name: cost_replaced_part
                   type: DECIMAL(8,2)
                   constraints:
@@ -56,11 +46,6 @@ databaseChangeLog:
                   type: DECIMAL(8,2)
                   constraints:
                     nullable: false
-              - column:
-                  name: cost_additional_performed_work
-                  type: DECIMAL(8,2)
-                  constraints:
-                    nullable: true
               - column:
                   name: total_cost_work_order
                   type: DECIMAL(8,2)
@@ -82,5 +67,10 @@ databaseChangeLog:
               - column:
                   name: date_completion_repair
                   type: TIMESTAMP
+                  constraints:
+                    nullable: true
+              - column:
+                  name: description
+                  type: VARCHAR(128)
                   constraints:
                     nullable: true

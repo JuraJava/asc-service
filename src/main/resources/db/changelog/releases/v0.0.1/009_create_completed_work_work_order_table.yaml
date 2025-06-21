@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009-create-completed-work-work-order
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: completed_work_work_order
+            columns:
+              - column:
+                  name: completed_work_id
+                  type: BIGSERIAL
+              - column:
+                  name: work_order_id
+                  type: BIGSERIAL
+        - addForeignKeyConstraint:
+            baseTableName: completed_work_work_order
+            baseColumnNames: completed_work_id
+            referencedTableName: completed_work
+            referencedColumnNames: id
+            constraintName: fk_completed_work_work_order_completed_work
+        - addForeignKeyConstraint:
+            baseTableName: completed_work_work_order
+            baseColumnNames: work_order_id
+            referencedTableName: work_order
+            referencedColumnNames: id
+            constraintName: fk_completed_work_work_order_work_order

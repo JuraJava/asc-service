@@ -2,14 +2,12 @@ package com.yurdan.ascService.model.entity;
 
 import com.yurdan.ascService.model.enums.RoleOfEmployee;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,14 +32,12 @@ public class Employee {
     @Column(name = "share_of_completed_work")
     private Float shareOfWork;
 
-//    @OneToMany(mappedBy = "acceptedById")
     @OneToMany(mappedBy = "acceptedBy")
     private List<RepairRequest> acceptedRequests;
 
     @OneToMany(mappedBy = "performedBy")
     private List<WorkOrder> performedRepairs;
 
-//    @OneToMany(mappedBy = "acceptedById")
     @OneToMany(mappedBy = "acceptedBy")
     private List<PaymentTransactions> acceptedPayments;
 }

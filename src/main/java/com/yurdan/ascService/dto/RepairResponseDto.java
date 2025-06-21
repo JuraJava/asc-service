@@ -1,15 +1,13 @@
 package com.yurdan.ascService.dto;
 
 import com.yurdan.ascService.model.enums.TypeOfRepair;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,9 +15,9 @@ import java.time.LocalDateTime;
 public class RepairResponseDto {
 
     private Long id;
-    private LocalDateTime createdAt;
-    private TypeOfRepair typeOfRepair;
     private Long deviceId;
+    private TypeOfRepair typeOfRepair;
+    private LocalDateTime createdAt;
     private String serialNumber;
     private LocalDate saleDate;
     private String defect;

@@ -18,9 +18,15 @@ databaseChangeLog:
                   type: VARCHAR(32)
                   constraints:
                     nullable: false
-                    unique: true
               - column:
                   name: cost_work
                   type: DECIMAL(8,2)
                   constraints:
                     nullable: false
+#              - column:
+#                  name: work_order_id
+#                  type: BIGINT
+#                  constraints:
+#                    foreignKeyName: fk_completed_work_work_order
+#                    referencedTableName: work_order
+#                    referencedColumnNames: id
