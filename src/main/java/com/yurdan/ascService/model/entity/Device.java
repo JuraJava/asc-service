@@ -31,7 +31,7 @@ public class Device {
     @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
     private List<SparePart> spareParts;
 
-    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "device")
     private List<RepairRequest> repairRequests;
 }
 

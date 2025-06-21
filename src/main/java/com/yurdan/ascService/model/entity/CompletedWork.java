@@ -1,14 +1,14 @@
 package com.yurdan.ascService.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,16 +20,20 @@ public class CompletedWork {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name_work", nullable = false, unique = true)
+    @Column(name = "name_work", nullable = false)
     private String name;
 
     @Column(name = "cost_work", nullable = false)
     private BigDecimal cost;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "completedWorks")
+    private List<WorkOrder> workOrders;
+
 }
 
-//DIAGNOSTICS
-//PROGRAM_REPAIR
-//UNBLOCKING
-//REPLACEMENT_UNDER_WARRANTY
-//REPLACEMENT_ON_PAID_BASIS
-//additionalWork
+// Diagnostic
+// ProgramR_Repair
+// Unblocking
+// Replacement_Under_Warranty
+// Replacement_On_Paid_Basis
+// Additional_Work

@@ -1,0 +1,26 @@
+databaseChangeLog:
+    - changeSet:
+        id: 008-create-spare-part-work-order
+        author: Yuri Danilov
+        changes:
+            - createTable:
+                tableName: spare_part_work_order
+                columns:
+                    - column:
+                        name: spare_part_id
+                        type: BIGSERIAL
+                    - column:
+                        name: work_order_id
+                        type: BIGSERIAL
+            - addForeignKeyConstraint:
+                baseTableName: spare_part_work_order
+                baseColumnNames: spare_part_id
+                referencedTableName: spare_part
+                referencedColumnNames: id
+                constraintName: fk_spare_part_work_order_spare_part
+            - addForeignKeyConstraint:
+                baseTableName: spare_part_work_order
+                baseColumnNames: work_order_id
+                referencedTableName: work_order
+                referencedColumnNames: id
+                constraintName: fk_spare_part_work_order_work_order

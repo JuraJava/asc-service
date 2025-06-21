@@ -23,7 +23,7 @@ public class AscServiceController {
         this.serviceAscService = serviceAscService;
     }
 
-@PostMapping( "/create-repair-request")
+    @PostMapping("/create-repair-request")
     public ResponseEntity<RepairResponseDto> createRepairRequest(@Valid @RequestBody RepairRequestDto dto) {
         RepairResponseDto response = serviceAscService.createRepairRequest(dto);
         return ResponseEntity.ok(response);
@@ -39,12 +39,15 @@ public class AscServiceController {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size
     ) {
-        Page<RepairResponseDto> response = serviceAscService.getFilteredRepairRequests(
-                createdDate, typeOfRepair, deviceId, customerFullName, acceptedById, PageRequest.of(page, size)
+        PageRequest pageRequest = PageRequest.of(
+                page != null ? page : 0,
+                size != null ? size : 10
+        );
 
+        Page<RepairResponseDto> response = serviceAscService.getFilteredRepairRequests(
+                createdDate, typeOfRepair, deviceId, customerFullName, acceptedById, pageRequest
         );
         return ResponseEntity.ok(response);
     }
-
 }
 

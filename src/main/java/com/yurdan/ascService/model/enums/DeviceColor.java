@@ -3,7 +3,7 @@ package com.yurdan.ascService.model.enums;
 public enum DeviceColor {
     BLACK,
     WHITE,
-    SILVERY,
+    SILVER,
     GOLDEN,
     RED,
     BLUE,
