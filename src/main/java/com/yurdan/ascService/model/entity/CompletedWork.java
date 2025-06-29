@@ -17,14 +17,38 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.List;
 
+//@Entity
+//@Builder
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Table(name = "completed_work")
+//public class CompletedWork {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
+//    private Long id;
+//
+//    @Column(name = "name_work", nullable = false)
+//    private String name;
+//
+//    @Column(name = "cost_work", nullable = false)
+//    private BigDecimal cost;
+//
+//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "completedWorks")
+//    private List<WorkOrder> workOrders;
+//
+//}
+
 @Entity
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Table(name = "completed_work")
 public class CompletedWork {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -39,6 +63,13 @@ public class CompletedWork {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "completedWorks")
     private List<WorkOrder> workOrders;
 
+    @Builder(toBuilder = true)
+    public CompletedWork(Long id, String name, BigDecimal cost, List<WorkOrder> workOrders) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.workOrders = workOrders;
+    }
 }
 
 // Diagnostic

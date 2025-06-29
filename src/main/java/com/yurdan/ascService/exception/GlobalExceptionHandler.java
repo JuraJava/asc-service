@@ -81,8 +81,29 @@ public class GlobalExceptionHandler {
         ));
     }
 
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
+//        if (ex instanceof DeviceNotFoundException ||
+//                ex instanceof EmployeeNotFoundException ||
+//                ex instanceof EngineerNotFoundException ||
+//                ex instanceof EngineerRoleRequiredException ||
+//                ex instanceof RepairRequestNotFoundException ||
+//                ex instanceof RepairStatusViolationException ||
+//                ex instanceof UnauthorizedWorkOrderUpdateException ||
+//                ex instanceof SparePartUnavailableException ||
+//                ex instanceof WorkOrderNotFoundException) {
+//            throw (RuntimeException) ex;
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
+//                "error", "An unexpected error occurred. We are already working on a solution!"
+//        ));
+//    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
+        ex.printStackTrace(); // <-- Добавлен вывод стектрейса в консоль
+
         if (ex instanceof DeviceNotFoundException ||
                 ex instanceof EmployeeNotFoundException ||
                 ex instanceof EngineerNotFoundException ||
@@ -90,8 +111,12 @@ public class GlobalExceptionHandler {
                 ex instanceof RepairRequestNotFoundException ||
                 ex instanceof RepairStatusViolationException ||
                 ex instanceof UnauthorizedWorkOrderUpdateException ||
+                ex instanceof SparePartUnavailableException ||
                 ex instanceof WorkOrderNotFoundException) {
-            throw (RuntimeException) ex;
+            // Лучше вернуть понятный ответ, чем пробрасывать дальше
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "error", ex.getMessage()
+            ));
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(

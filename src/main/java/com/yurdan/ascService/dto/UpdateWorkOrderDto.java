@@ -18,5 +18,5 @@ public class UpdateWorkOrderDto {
     private List<Long> sparePartIds;
     private List<Long> completedWorkIds;
     private Long repairRequestId;
-
+    private Long newPerformedById;
 }

@@ -24,6 +24,12 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
+                  name: email
+                  type: VARCHAR(45)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
                   name: role
                   type: VARCHAR(24)
                   constraints:

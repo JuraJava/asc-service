@@ -25,6 +25,11 @@ databaseChangeLog:
                   constraints:
                     nullable: true
               - column:
+                  name: reserve_quantity
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+              - column:
                   name: cost_spare_part
                   type: DECIMAL(8,2)
                   constraints:
@@ -34,11 +39,4 @@ databaseChangeLog:
                   type: BIGINT
                   remarks: "This is the id of the device for which this spare part is used"
                   constraints:
-                    nullable: true
-#              - column:
-#                  name: work_order_id
-#                  type: BIGINT
-#                  constraints:
-#                    foreignKeyName: fk_spare_part_work_order
-#                    referencedTableName: work_order
-#                    referencedColumnNames: id
+                    nullable: false

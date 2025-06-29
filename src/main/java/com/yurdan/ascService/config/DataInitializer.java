@@ -44,10 +44,9 @@ public class DataInitializer {
         for (int i = 0; i < 450; i++) {  // Generate 450 spare parts
             spareParts.add(sparePartGenerator());
         }
-        List<SparePart> savedSpareParts = sparePartRepository.saveAll(spareParts);
 
         // Связываем устройства и запчасти: каждое устройство получает по одной запчасти каждого типа
-        Map<String, List<SparePart>> sparePartsByType = savedSpareParts.stream()
+        Map<String, List<SparePart>> sparePartsByType = spareParts.stream()
                 .collect(Collectors.groupingBy(sp -> getSparePartTypeFromBatch(sp.getBatchNumber())));
 
         // Получаем уникальные типы из сгенерированных запчастей
@@ -67,19 +66,22 @@ public class DataInitializer {
                 }
             }
         }
+        List<SparePart> savedSpareParts = sparePartRepository.saveAll(spareParts);
 
         List<Employee> employees = new ArrayList<>();
-        employees.add(Employee.builder().fullName("Инженеров Инженер").patronymic("Инженерович")
+        employees.add(Employee.builder().email("engineer@mail.ru").fullName("Инженеров Инженер").patronymic("Инженерович")
                 .role(RoleOfEmployee.ENGINEER).shareOfWork(0.4F).build());
-        employees.add(Employee.builder().fullName("Мастеров Мастер").patronymic("Мастерович")
-                .role(RoleOfEmployee.ENGINEER).shareOfWork(0.4F).build());
-        employees.add(Employee.builder().fullName("Админский Админ").patronymic("Админович")
+//        employees.add(Employee.builder().email("engineer@mail.ru").fullName("Мастеров Мастер").patronymic("Мастерович")
+//                .role(RoleOfEmployee.ENGINEER).shareOfWork(0.4F).build());
+        employees.add(Employee.builder().email("admin@mail.ru").fullName("Админский Админ").patronymic("Админович")
+                .role(RoleOfEmployee.ADMIN).shareOfWork(0.3F).build());
+        employees.add(Employee.builder().email("administrator@mail.ru").fullName("Администраторский Администр").patronymic("Админович")
                 .role(RoleOfEmployee.ADMINISTRATOR).shareOfWork(0.3F).build());
-        employees.add(Employee.builder().fullName("Приёмова Приемщица").patronymic("Приёмовна")
+        employees.add(Employee.builder().email("receiver@mail.ru").fullName("Приёмова Приемщица").patronymic("Приёмовна")
                 .role(RoleOfEmployee.RECEIVER).shareOfWork(0.2F).build());
-        employees.add(Employee.builder().fullName("Складских Кладовщик").patronymic("Коробович")
+        employees.add(Employee.builder().email("storekeeper@mail.ru").fullName("Складских Кладовщик").patronymic("Коробович")
                 .role(RoleOfEmployee.STOREKEEPER).shareOfWork(0.4F).build());
-        employees.add(Employee.builder().fullName("Главнов Дирик").patronymic("Начальникевич")
+        employees.add(Employee.builder().email("director@mail.ru").fullName("Главнов Дирик").patronymic("Начальникевич")
                 .role(RoleOfEmployee.DIRECTOR).shareOfWork(0.4F).build());
         employeeRepository.saveAll(employees);
     }
@@ -128,7 +130,7 @@ public class DataInitializer {
                 return "Unknown";
             }
             String numberPart = parts[1];
-            
+
             // Извлекаем только цифры
             String digits = numberPart.replaceAll("[^0-9]", "");
             if (digits.length() < 6) {
@@ -136,7 +138,7 @@ public class DataInitializer {
             }
             String firstSixDigits = digits.substring(0, 6);
             int num = Integer.parseInt(firstSixDigits);
-            
+
             // Определяем тип по диапазону
             if (num <= 199999) return "1";
             if (num <= 299999) return "2";
@@ -202,10 +204,11 @@ public class DataInitializer {
             }
         }
 
-            return SparePart.builder()
+        return SparePart.builder()
                 .batchNumber(number)
                 .description(description)
                 .remainingQuantity(RANDOM.nextLong(10) + 1)
+                .reserveQuantity(0L)
                 .cost(cost)
                 .build();
     }
