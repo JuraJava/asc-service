@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AscServiceControllerTest {
+class RepairRequestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -48,7 +48,7 @@ class AscServiceControllerTest {
                 .id(1L)
                 .createdAt(LocalDateTime.now())
                 .typeOfRepair(TypeOfRepair.WARRANTY)
-                .deviceId(2L)
+                .device("SM-G950 BLACK")
                 .serialNumber("R1212N24DLK")
                 .saleDate(LocalDate.of(2025, 1, 1))
                 .defect("Does not start")
@@ -58,7 +58,7 @@ class AscServiceControllerTest {
                 .customerPatronymic("Petrovich")
                 .customerAddress("Moscow, Russia")
                 .customerPhone("89099111223")
-                .acceptedById(2L)
+                .acceptedBy("Приемщица")
                 .name("Operator")
                 .phoneNumber("89991122334")
                 .address("Moscow")
@@ -85,8 +85,8 @@ class AscServiceControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(responseDto.getId()))
-                .andExpect(jsonPath("$.customerFullName").value(responseDto.getCustomerFullName()));
+                .andExpect(jsonPath("$.id").value(responseDto.id()))
+                .andExpect(jsonPath("$.customerFullName").value(responseDto.customerFullName()));
     }
 
     @Test
@@ -111,7 +111,7 @@ class AscServiceControllerTest {
                         .param("page", "0")
                         .param("size", "10"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content[0].id").value(responseDto.getId()))
-                .andExpect(jsonPath("$.content[0].customerFullName").value(responseDto.getCustomerFullName()));
+                .andExpect(jsonPath("$.content[0].id").value(responseDto.id()))
+                .andExpect(jsonPath("$.content[0].customerFullName").value(responseDto.customerFullName()));
     }
 }

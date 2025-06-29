@@ -1,35 +1,41 @@
 package com.yurdan.ascService.dto;
 
 import com.yurdan.ascService.model.enums.TypeOfRepair;
-import lombok.*;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class RepairResponseDto {
+public record RepairResponseDto(Long id,
+                                String device,
+                                TypeOfRepair typeOfRepair,
+                                LocalDateTime createdAt,
+                                String serialNumber,
+                                LocalDate saleDate,
+                                String defect,
+                                String appearance,
+                                BigDecimal cost,
+                                String customerFullName,
+                                String customerPatronymic,
+                                String customerAddress,
+                                String customerPhone,
+                                String acceptedBy,
+                                String name,
+                                String phoneNumber,
+                                String address) {
 
-    private Long id;
-    private Long deviceId;
-    private TypeOfRepair typeOfRepair;
-    private LocalDateTime createdAt;
-    private String serialNumber;
-    private LocalDate saleDate;
-    private String defect;
-    private String appearance;
-    private BigDecimal cost;
-    private String customerFullName;
-    private String customerPatronymic;
-    private String customerAddress;
-    private String customerPhone;
-    private Long acceptedById;
-    private String name;
-    private String phoneNumber;
-    private String address;
+    public RepairResponseDto(){
+        this(null, null, null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null);
+    }
+
+    public RepairResponseDto(Long id){
+        this(id, null, null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null);
+    }
 }
 

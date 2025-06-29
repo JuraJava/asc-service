@@ -10,9 +10,9 @@ databaseChangeLog:
                   name: id
                   type: BIGSERIAL
                   constraints:
-                    autoIncrement: true
                     primaryKey: true
                     nullable: false
+                  autoIncrement: true
               - column:
                   name: device_name
                   type: VARCHAR(48)

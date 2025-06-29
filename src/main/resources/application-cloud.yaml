@@ -1,0 +1,19 @@
+server:
+  port: ${PORT:8281}
+spring:
+  application.name: asc-service
+  cloud:
+    config:
+      enabled: false
+
+eureka:
+  client:
+    enabled: ${EUREKA_ENABLED:true} # Флаг для включения/выключения
+    service-url:
+      defaultZone: http://localhost:8762/eureka
+    registry-fetch-interval-seconds: 5 # Интервал обновления регистрации (по умолчанию 30)
+    initial-instance-info-replication-interval-seconds: 5 # Интервал начальной репликации
+  instance:
+    lease-renewal-interval-in-seconds: 5 # Интервал отправки heartbeat (по умолчанию 30)
+    lease-expiration-duration-in-seconds: 10 # Время до истечения аренды (по умолчанию 90)
+

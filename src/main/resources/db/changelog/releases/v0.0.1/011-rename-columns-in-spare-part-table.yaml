@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 011-rename-columns-in-spare-part-table
+      author: Yaroslav Novikov
+      changes:
+        - renameColumn:
+            tableName: spare_part
+            oldColumnName: batch_number_part
+            newColumnName: batch_number
+            columnDataType: VARCHAR(16)
+        - renameColumn:
+            tableName: spare_part
+            oldColumnName: cost_spare_part
+            newColumnName: cost
+            columnDataType: DECIMAL(8,2)

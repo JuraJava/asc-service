@@ -10,9 +10,9 @@ databaseChangeLog:
                   name: id
                   type: BIGSERIAL
                   constraints:
-                    autoIncrement: true
                     primaryKey: true
                     nullable: false
+                  autoIncrement: true
               - column:
                   name: date_creation
                   type: TIMESTAMP
@@ -24,7 +24,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: id_device
+                  name: device_id
                   type: BIGINT
                   constraints:
                     nullable: false

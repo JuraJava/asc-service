@@ -1,10 +1,24 @@
 package com.yurdan.ascService.model.entity;
 
 import com.yurdan.ascService.model.enums.TypeOfRepair;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +31,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "repair_request")
+@Table(name = "repair_request", schema = "asc_service")
 public class RepairRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +48,7 @@ public class RepairRequest {
     private TypeOfRepair typeOfRepair;
 
     @ManyToOne
-    @JoinColumn(name = "id_device", nullable = false)
+    @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
     @Column(name = "serial_number", nullable = false, unique = true)
