@@ -10,9 +10,9 @@ databaseChangeLog:
                   name: id
                   type: BIGSERIAL
                   constraints:
-                    autoIncrement: true
                     primaryKey: true
                     nullable: false
+                  autoIncrement: true
               - column:
                   name: batch_number_part
                   type: VARCHAR(16)
@@ -30,11 +30,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: id_device_that_uses_this_part
+                  name: device_id
                   type: BIGINT
                   remarks: "This is the id of the device for which this spare part is used"
                   constraints:
-                    nullable: false
+                    nullable: true
 #              - column:
 #                  name: work_order_id
 #                  type: BIGINT

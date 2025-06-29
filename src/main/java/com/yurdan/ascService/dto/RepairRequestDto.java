@@ -3,10 +3,12 @@ package com.yurdan.ascService.dto;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
@@ -32,8 +34,6 @@ public class RepairRequestDto {
 
     @NotBlank(message = "Appearance is required")
     private String appearance;
-
-    private BigDecimal cost;
 
     @NotBlank(message = "Customer full name is required")
     private String customerFullName;

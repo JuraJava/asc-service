@@ -17,20 +17,25 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.*;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ServiceAscServiceTest {
@@ -67,7 +72,7 @@ class ServiceAscServiceTest {
         dto.setSaleDate(LocalDate.of(2023, 12, 1));
         dto.setDefect("Does not boot");
         dto.setAppearance("Slight scratches");
-        dto.setCost(new BigDecimal("150.00"));
+//        dto.setCost(new BigDecimal("150.00"));
         dto.setCustomerFullName("John Doe");
         dto.setCustomerPatronymic("Eduardovich");
         dto.setCustomerAddress("123 Test Street");
@@ -90,10 +95,11 @@ class ServiceAscServiceTest {
         savedEntity.setId(100L);
         when(repairRequestRepository.save(mockEntity)).thenReturn(savedEntity);
 
-        RepairResponseDto expectedResponse = new RepairResponseDto();
-        expectedResponse.setId(100L);
-        expectedResponse.setCustomerFullName("John Doe");
-        expectedResponse.setSerialNumber("SN123456");
+        RepairResponseDto expectedResponse = RepairResponseDto.builder()
+                .id(100L)
+                .customerFullName("John Doe")
+                .serialNumber("SN123456")
+                .build();
 
         when(repairRequestMapper.toDto(savedEntity)).thenReturn(expectedResponse);
 
@@ -102,9 +108,9 @@ class ServiceAscServiceTest {
 
         // then
         assertNotNull(result);
-        assertEquals("John Doe", result.getCustomerFullName());
-        assertEquals("SN123456", result.getSerialNumber());
-        assertEquals(100L, result.getId());
+        assertEquals("John Doe", result.customerFullName());
+        assertEquals("SN123456", result.serialNumber());
+        assertEquals(100L, result.id());
 
         verify(repairRequestRepository).save(mockEntity);
         verify(repairRequestMapper).toDto(savedEntity);
@@ -140,9 +146,7 @@ class ServiceAscServiceTest {
                 .thenReturn(Optional.empty());
         when(deviceRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(DeviceNotFoundException.class, () -> {
-            serviceAscService.createRepairRequest(dto);
-        });
+        assertThrows(DeviceNotFoundException.class, () -> serviceAscService.createRepairRequest(dto));
     }
 
     @Test

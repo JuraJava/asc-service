@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 010_add_column_description_in_spare_part
+      author: Yaroslav Novikov
+      changes:
+        - sql:
+            splitStatements: true
+            sql:
+              ALTER TABLE IF EXISTS spare_part ADD COLUMN IF NOT EXISTS description TEXT;
+              COMMENT ON COLUMN spare_part.description IS 'Описание запчасти';
+      rollback:
+        - sql:
+            sql: ALTER TABLE IF EXISTS spare_part DROP COLUMN IF EXISTS description;

@@ -2,9 +2,12 @@ package com.yurdan.ascService.mapper;
 
 import com.yurdan.ascService.dto.RepairRequestDto;
 import com.yurdan.ascService.dto.RepairResponseDto;
+import com.yurdan.ascService.model.entity.Device;
+import com.yurdan.ascService.model.entity.Employee;
 import com.yurdan.ascService.model.entity.RepairRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
 public interface RepairRequestMapper {
@@ -14,7 +17,23 @@ public interface RepairRequestMapper {
     @Mapping(source = "acceptedById", target = "acceptedBy", qualifiedByName = "mapEmployeeById")
     RepairRequest toEntity(RepairRequestDto dto);
     // Entity → DTO
-    @Mapping(source = "device", target = "deviceId", qualifiedByName = "mapDeviceToId")
-    @Mapping(source = "acceptedBy", target = "acceptedById", qualifiedByName = "mapEmployeeToId")
+    @Mapping(source = "device", target = "device", qualifiedByName = "formatDeviceName")
+    @Mapping(source = "acceptedBy", target = "acceptedBy", qualifiedByName = "formatEmployeeName")
     RepairResponseDto toDto(RepairRequest entity);
+
+    @Named("formatDeviceName")
+    default String formatDeviceName(Device device) {
+        if (device == null) {
+            return null;
+        }
+        return device.getDeviceName() + " " + device.getDeviceColor().name();
+    }
+
+    @Named("formatEmployeeName")
+    default String formatEmployeeName(Employee acceptedBy) {
+        if (acceptedBy == null) {
+            return null;
+        }
+        return acceptedBy.getFullName();
+    }
 }
