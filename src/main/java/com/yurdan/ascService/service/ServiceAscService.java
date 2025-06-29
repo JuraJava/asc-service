@@ -2,12 +2,14 @@ package com.yurdan.ascService.service;
 
 import com.yurdan.ascService.dto.RepairRequestDto;
 import com.yurdan.ascService.dto.RepairResponseDto;
+import com.yurdan.ascService.dto.UpdateDefectDto;
 import com.yurdan.ascService.exception.DeviceNotFoundException;
 import com.yurdan.ascService.exception.EmployeeNotFoundException;
 import com.yurdan.ascService.mapper.RepairRequestMapper;
 import com.yurdan.ascService.model.entity.Device;
 import com.yurdan.ascService.model.entity.Employee;
 import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.model.enums.RequestStatus;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import com.yurdan.ascService.repository.DeviceRepository;
 import com.yurdan.ascService.repository.EmployeeRepository;
@@ -34,8 +36,8 @@ public class ServiceAscService {
     private final EmployeeRepository employeeRepository;
     private final RepairRequestMapper repairRequestMapper;
 
-    @Value("${service-center.name}")
-    private String name;
+    @Value("${service-center.name-of-center}")
+    private String nameOfCenter;
 
     @Value("${service-center.phone-number}")
     private String phoneNumber;
@@ -53,38 +55,46 @@ public class ServiceAscService {
         this.repairRequestMapper = repairRequestMapper;
     }
 
-    @Transactional
-    public RepairResponseDto createRepairRequest(RepairRequestDto dto) {
+    public RepairRequest createRepairRequest(RepairRequestDto dto) {
         Optional<RepairRequest> existing = repairRequestRepository.findBySerialNumber(dto.getSerialNumber());
         if (existing.isPresent()) {
-            return repairRequestMapper.toDto(existing.get());
+            return repairRequestRepository.save(existing.get());
         }
 
         // Проверяем наличие устройств и сотрудника
         Device device = deviceRepository.findById(dto.getDeviceId())
                 .orElseThrow(() -> {
-                    log.error("Device not found with ID: {}", dto.getDeviceId());
-                    return new DeviceNotFoundException(dto.getDeviceId());
+                            System.out.println("Device not found");
+                   throw  new DeviceNotFoundException(dto.getDeviceId());
                 });
         Employee acceptedBy = employeeRepository.findById(dto.getAcceptedById())
-                .orElseThrow(() -> {
-                    log.error("Employee not found with ID: {}", dto.getAcceptedById());
-                    return new EmployeeNotFoundException(dto.getAcceptedById());
-                });
+                .orElseThrow(() -> new EmployeeNotFoundException(dto.getAcceptedById()));
 
-        RepairRequest request = repairRequestMapper.toEntity(dto);
-        request.setName(name);
-        request.setPhoneNumber(phoneNumber);
-        request.setAddress(address);
-        request.setDevice(device);
-        request.setAcceptedBy(acceptedBy);
-        RepairRequest saved = repairRequestRepository.save(request);
-        return repairRequestMapper.toDto(saved);
+        RepairRequest request  = RepairRequest.builder()
+                .requestStatus(RequestStatus.ACCEPTED)
+                .nameOfServiceCenter(nameOfCenter)
+                .phoneNumberOfServiceCenter (phoneNumber)
+                .addressOfServiceCenter(address)
+                .typeOfRepair(dto.getTypeOfRepair())
+                .device(device)
+                .serialNumber(dto.getSerialNumber())
+                .saleDate(dto.getSaleDate())
+                .defect(dto.getDefect())
+                .appearance(dto.getAppearance())
+                .customerFullName(dto.getCustomerFullName())
+                .customerPatronymic(dto.getCustomerPatronymic())
+                .customerAddress(dto.getCustomerAddress())
+                .customerPhone(dto.getCustomerPhone())
+                .acceptedBy(acceptedBy)
+                .build();
+
+        return repairRequestRepository.save(request);
     }
 
     public Page<RepairResponseDto> getFilteredRepairRequests(
             LocalDate createdDate,
             TypeOfRepair typeOfRepair,
+            RequestStatus requestStatus,
             Long deviceId,
             String customerFullName,
             Long acceptedById,
@@ -101,6 +111,9 @@ public class ServiceAscService {
         if (typeOfRepair != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("typeOfRepair"), typeOfRepair));
         }
+        if (requestStatus != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("requestStatus"), requestStatus));
+        }
         if (deviceId != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("device").get("id"), deviceId));
         }
@@ -110,9 +123,20 @@ public class ServiceAscService {
         if (acceptedById != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("acceptedBy").get("id"), acceptedById));
         }
-        log.info("Получение списка заявок на ремонт в сервисном слое после фильтров");
+
         return repairRequestRepository.findAll(spec, pageable)
                 .map(repairRequestMapper::toDto);
+    }
+
+    @Transactional
+    public RepairResponseDto updateDefect(UpdateDefectDto dto) {
+        RepairRequest repairRequest = repairRequestRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("RepairRequest with id " + dto.getId() + " not found"));
+
+        repairRequest.setDefect(dto.getDefect());
+
+        RepairRequest updated = repairRequestRepository.save(repairRequest);
+        return repairRequestMapper.toDto(updated);
     }
 }
 

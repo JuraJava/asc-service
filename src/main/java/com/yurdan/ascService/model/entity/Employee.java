@@ -37,6 +37,9 @@ public class Employee {
     @Column(name = "patronymic")
     private String patronymic;
 
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private RoleOfEmployee role;

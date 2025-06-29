@@ -22,11 +22,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "spare_part")
 public class SparePart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -41,6 +40,9 @@ public class SparePart {
     @Column(name = "remaining_quantity")
     private Long remainingQuantity;
 
+    @Column(name = "reserve_quantity")
+    private Long reserveQuantity;
+
     @Column(name = "cost", nullable = false)
     private BigDecimal cost;
 
@@ -50,4 +52,17 @@ public class SparePart {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "spareParts")
     private List<WorkOrder> workOrders;
+
+    @Builder(toBuilder = true)
+    public SparePart(Long id, String batchNumber, String description, Long remainingQuantity, Long reserveQuantity, BigDecimal cost,
+                     Device device, List<WorkOrder> workOrders) {
+        this.id = id;
+        this.batchNumber = batchNumber;
+        this.description = description;
+        this.remainingQuantity = remainingQuantity;
+        this.reserveQuantity = reserveQuantity;
+        this.cost = cost;
+        this.device = device;
+        this.workOrders = workOrders;
+    }
 }

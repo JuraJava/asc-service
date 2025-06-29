@@ -1,7 +1,9 @@
 package com.yurdan.ascService.controller.rest;
 
-import com.yurdan.ascService.dto.RepairRequestDto;
-import com.yurdan.ascService.dto.RepairResponseDto;
+import com.yurdan.ascService.dto.*;
+import com.yurdan.ascService.mapper.RepairRequestMapper;
+import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.model.enums.RequestStatus;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import com.yurdan.ascService.service.ServiceAscService;
 import jakarta.validation.Valid;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,23 +24,27 @@ import java.time.LocalDate;
 public class RepairRequestController {
 
     private final ServiceAscService serviceAscService;
+    private final RepairRequestMapper repairRequestMapper;
 
-    public RepairRequestController(ServiceAscService serviceAscService) {
+    public RepairRequestController(ServiceAscService serviceAscService, RepairRequestMapper repairRequestMapper) {
         this.serviceAscService = serviceAscService;
+        this.repairRequestMapper = repairRequestMapper;
     }
 
+    @PreAuthorize("hasAnyAuthority('RECEIVER')")
     @PostMapping("/create-repair-request")
-    public ResponseEntity<RepairResponseDto> createRepairRequest(@Valid @RequestBody RepairRequestDto dto) {
-        log.info("Создание новой заявки: {}", dto);
-        RepairResponseDto response = serviceAscService.createRepairRequest(dto);
-        log.info("Заявка создана: {}", response);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<RepairResponseDto> createRepairRequest(
+            @Valid @RequestBody RepairRequestDto dto) {
+        RepairRequest repairRequest = serviceAscService.createRepairRequest(dto);
+        RepairResponseDto responseDto = repairRequestMapper.toDto(repairRequest);
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/repair-requests")
     public ResponseEntity<Page<RepairResponseDto>> getRepairRequests(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdDate,
             @RequestParam(required = false) TypeOfRepair typeOfRepair,
+            @RequestParam(required = false) RequestStatus requestStatus,
             @RequestParam(required = false) Long deviceId,
             @RequestParam(required = false) String customerFullName,
             @RequestParam(required = false) Long acceptedById,
@@ -59,9 +66,16 @@ public class RepairRequestController {
         );
 
         Page<RepairResponseDto> response = serviceAscService.getFilteredRepairRequests(
-                createdDate, typeOfRepair, deviceId, customerFullName, acceptedById, pageRequest
+                createdDate, typeOfRepair, requestStatus, deviceId, customerFullName, acceptedById, pageRequest
         );
         return ResponseEntity.ok(response);
     }
+    @PreAuthorize("hasAnyAuthority('RECEIVER')")
+    @PatchMapping("/repair-request/update-defect")
+    public ResponseEntity<RepairResponseDto> updateDefect(@Valid @RequestBody UpdateDefectDto dto) {
+        RepairResponseDto response = serviceAscService.updateDefect(dto);
+        return ResponseEntity.ok(response);
+    }
+
 }
 

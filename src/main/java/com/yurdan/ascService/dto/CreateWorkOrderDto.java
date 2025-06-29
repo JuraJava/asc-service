@@ -18,3 +18,4 @@ public class CreateWorkOrderDto {
     @NotNull(message = "Completed work id is required")
     private List<Long> completedWorkIds;
 }
+

@@ -4,6 +4,6 @@ import com.yurdan.ascService.model.enums.RoleOfEmployee;
 
 public class EngineerRoleRequiredException extends SecurityException {
     public EngineerRoleRequiredException(RoleOfEmployee roleOfEmployee) {
-        super("Role " + roleOfEmployee  + " is not role ENGINEER. Only engineer can create WorkOrder");
+        super("Role " + roleOfEmployee  + " is not role ENGINEER. Only engineer can create or change a WorkOrder");
     }
 }

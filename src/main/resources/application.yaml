@@ -20,6 +20,8 @@
 
 server:
   port: ${PORT:8081}
+jwt:
+  secret: ${JWT_ACCESS_SECRET:"luAUigPkQylTDBN0J58GVnKVgfhi+T2oOitIk6u8/HqGVBOxuJFANQD5OHPVKHdxsdxIUiNyIRh18PvzCCdGRQ=="}
 spring:
   application.name: asc-service
   datasource:
@@ -42,7 +44,7 @@ spring:
     deserialization:
       fail-on-unknown-properties: true
 service_center:
-  name: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
+  name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
   phone_number: "89180038448"
   address: "Sochi, Severnaya str., 6"
 
