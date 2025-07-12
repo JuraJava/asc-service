@@ -61,6 +61,12 @@ public class WorkOrderService {
 
         RepairRequest repairRequest = repairRequestRepository.findById(dto.getRepairRequestId())
                 .orElseThrow(() -> new RepairRequestNotFoundException(dto.getRepairRequestId()));
+
+        if (repairRequest.getRequestStatus() == RequestStatus.ON_PAYMENT || repairRequest.getRequestStatus() == RequestStatus.CLOSED) {
+            throw new ProhibitionCreateOrderBasedOnClosedOOrOnPaymentRequestException("Создать заказ " +
+                    "на основании уже закрытой заявки или заявки, которая на оплате, невозможно.");
+        }
+
         repairRequest.setRequestStatus(RequestStatus.AT_WORK);
 
         List<CompletedWork> completedWorks = completedWorkRepository.findAllById(dto.getCompletedWorkIds());
@@ -106,7 +112,7 @@ public class WorkOrderService {
                 .orElseThrow(() -> new WorkOrderNotFoundException(workOrderId));
 
         if (workOrder.getRepairStatus() == RepairStatus.CLOSED) {
-            throw new RepairStatusViolationException("Cannot modify a CLOSED work order.");
+            throw new RepairStatusViolationException("Закрытый заказ изменить невозможно.");
         }
 
         boolean isEngineerPerformer = workOrder.getPerformedBy().getId().equals(editor.getId()) &&
@@ -116,7 +122,7 @@ public class WorkOrderService {
                 editor.getRole() == RoleOfEmployee.ADMINISTRATOR;
 
         if (!isEngineerPerformer && !isPrivileged) {
-            throw new UnauthorizedWorkOrderUpdateException("You are not allowed to modify this work order.");
+            throw new UnauthorizedWorkOrderUpdateException("Вам не разрешено изменять этот заказ.");
         }
 
         return updateWorkOrderTransactional(workOrder, dto, editor);
@@ -149,7 +155,7 @@ public class WorkOrderService {
                         editor.getRole() == RoleOfEmployee.ADMINISTRATOR;
 
                 if (!isPrivileged && !editor.getId().equals(workOrder.getPerformedBy().getId())) {
-                    throw new UnauthorizedWorkOrderUpdateException("Only the performer or privileged staff can close the order.");
+                    throw new UnauthorizedWorkOrderUpdateException("Только исполнитель или привилегированный персонал может закрыть заказ");
                 }
 
                 if (originalStatus != RepairStatus.COMPLETED) {

@@ -1,5 +1,6 @@
 package com.yurdan.ascService.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.yurdan.ascService.model.enums.DeviceColor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,6 +41,7 @@ public class Device {
     private DeviceColor deviceColor;
 
     @OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
+//    @JsonManagedReference
     private List<SparePart> spareParts;
 
     @OneToMany(mappedBy = "device")

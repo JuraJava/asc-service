@@ -1,21 +1,10 @@
 package com.yurdan.ascService.model.entity;
 
 import com.yurdan.ascService.model.enums.Currencies;
+import com.yurdan.ascService.model.enums.PaymentTransactionStatus;
 import com.yurdan.ascService.model.enums.TypeOfPayment;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -25,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Table(name = "payment_transactions")
 public class PaymentTransactions {
     @Id
@@ -38,7 +27,11 @@ public class PaymentTransactions {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_payment", nullable = false)
-    private TypeOfPayment type;
+    private TypeOfPayment typeOfPayment;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_transaction_status", nullable = false)
+    private PaymentTransactionStatus transactionStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false)
@@ -49,9 +42,32 @@ public class PaymentTransactions {
     @Column(name = "executed_at", nullable = false)
     private LocalDateTime executedAt;
 
+    @OneToOne
+    @JoinColumn(name = "id_repair_request", nullable = false)
+    private RepairRequest repairRequest;
+
     @ManyToOne
     @JoinColumn(name = "id_employee_who_accepted_payment", nullable = false)
     private Employee acceptedBy;
+
+    @Builder
+    public PaymentTransactions(Long id,
+                               BigDecimal amount,
+                               TypeOfPayment typeOfPayment,
+                               PaymentTransactionStatus transactionStatus,
+                               Currencies currency,
+                               LocalDateTime executedAt,
+                               RepairRequest repairRequest,
+                               Employee acceptedBy) {
+        this.id = id;
+        this.amount = amount;
+        this.typeOfPayment = typeOfPayment;
+        this.transactionStatus = transactionStatus;
+        this.currency = currency;
+        this.executedAt = executedAt;
+        this.repairRequest = repairRequest;
+        this.acceptedBy = acceptedBy;
+    }
 }
 
 

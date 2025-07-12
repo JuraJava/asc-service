@@ -26,7 +26,7 @@ spring:
   application.name: asc-service
   datasource:
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5454/asc_database?currentSchema:asc_service}
-#    url: ${DATABASE_URL:jdbc:postgresql://db:5432/database_asc?currentSchema:public}
+#    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/database_asc?currentSchema:public}
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
@@ -36,21 +36,41 @@ spring:
     properties:
       hibernate:
         default_schema: ${APP_POSTGRESQL_SCHEMA:asc_service}
+#        default_schema: ${APP_POSTGRESQL_SCHEMA:public}
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/releases/db.changelog-master.yaml
     default_schema: ${APP_POSTGRESQL_SCHEMA:asc_service}
+#    default_schema: ${APP_POSTGRESQL_SCHEMA:public}
   jackson:
     deserialization:
       fail-on-unknown-properties: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: asc-service-response-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
 service_center:
   name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
   phone_number: "89180038448"
   address: "Sochi, Severnaya str., 6"
 
+scheduler:
+  outbox:
+    fixed-delay-ms: 300000  # 5 минут
+outbox:
+  partition:
+    retention-days: 30
+
 eureka:
   client:
     enabled: ${EUREKA_ENABLED:false} # Флаг для включения/выключения
-
 app:
   init-data: false

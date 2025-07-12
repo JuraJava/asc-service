@@ -19,6 +19,7 @@ import jakarta.persistence.PersistenceException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -81,39 +82,50 @@ public class GlobalExceptionHandler {
         ));
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
-//        if (ex instanceof DeviceNotFoundException ||
-//                ex instanceof EmployeeNotFoundException ||
-//                ex instanceof EngineerNotFoundException ||
-//                ex instanceof EngineerRoleRequiredException ||
-//                ex instanceof RepairRequestNotFoundException ||
-//                ex instanceof RepairStatusViolationException ||
-//                ex instanceof UnauthorizedWorkOrderUpdateException ||
-//                ex instanceof SparePartUnavailableException ||
-//                ex instanceof WorkOrderNotFoundException) {
-//            throw (RuntimeException) ex;
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
-//                "error", "An unexpected error occurred. We are already working on a solution!"
-//        ));
-//    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
         ex.printStackTrace(); // <-- Добавлен вывод стектрейса в консоль
 
-        if (ex instanceof DeviceNotFoundException ||
-                ex instanceof EmployeeNotFoundException ||
-                ex instanceof EngineerNotFoundException ||
-                ex instanceof EngineerRoleRequiredException ||
-                ex instanceof RepairRequestNotFoundException ||
-                ex instanceof RepairStatusViolationException ||
-                ex instanceof UnauthorizedWorkOrderUpdateException ||
-                ex instanceof SparePartUnavailableException ||
-                ex instanceof WorkOrderNotFoundException) {
-            // Лучше вернуть понятный ответ, чем пробрасывать дальше
+//        if (ex instanceof DeviceNotFoundException ||
+//                ex instanceof EmployeeNotFoundException ||
+//                ex instanceof EngineerNotFoundException ||
+//                ex instanceof EngineerRoleRequiredException ||
+//                ex instanceof NoPaymentForWarrantyRepairs ||
+//                ex instanceof NotAllWorkOrdersClosedException ||
+//                ex instanceof NoWorkOrdersForRepairRequestException ||
+//                ex instanceof PaymentTransactionAlreadyExistsException ||
+//                ex instanceof ProhibitionCreateOrderBasedOnClosedOOrOnPaymentRequestException ||
+//                ex instanceof RepairRequestNotFoundException ||
+//                ex instanceof RepairStatusViolationException ||
+//                ex instanceof SparePartUnavailableException ||
+//                ex instanceof UnauthorizedActionException ||
+//                ex instanceof UnauthorizedWorkOrderUpdateException ||
+//                ex instanceof WorkOrderNotFoundException) {
+//            // Лучше вернуть понятный ответ, чем пробрасывать дальше
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+//                    "error", ex.getMessage()
+//            ));
+//        }
+
+        Set<Class<?>> badRequestExceptions = Set.of(
+                DeviceNotFoundException.class,
+                EmployeeNotFoundException.class,
+                EngineerNotFoundException.class,
+                EngineerRoleRequiredException.class,
+                NoPaymentForWarrantyRepairs.class,
+                NotAllWorkOrdersClosedException.class,
+                NoWorkOrdersForRepairRequestException.class,
+                PaymentTransactionAlreadyExistsException.class,
+                ProhibitionCreateOrderBasedOnClosedOOrOnPaymentRequestException.class,
+                RepairRequestNotFoundException.class,
+                RepairStatusViolationException.class,
+                SparePartUnavailableException.class,
+                UnauthorizedActionException.class,
+                UnauthorizedWorkOrderUpdateException.class,
+                WorkOrderNotFoundException.class
+        );
+
+        if (badRequestExceptions.contains(ex.getClass())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
                     "error", ex.getMessage()
             ));

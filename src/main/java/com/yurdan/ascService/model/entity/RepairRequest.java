@@ -1,21 +1,8 @@
 package com.yurdan.ascService.model.entity;
 
-import com.yurdan.ascService.model.enums.RepairStatus;
 import com.yurdan.ascService.model.enums.RequestStatus;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -83,8 +70,11 @@ public class RepairRequest {
     @JoinColumn(name = "id_employee_who_accepted", nullable = false)
     private Employee acceptedBy;
 
-    @OneToMany(mappedBy = "repairRequest", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "repairRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WorkOrder> workOrders;
+
+    @OneToOne(mappedBy = "repairRequest", cascade = CascadeType.ALL)
+    private PaymentTransactions paymentTransactions;
 
     @Column(name = "service_center_name", nullable = false)
     private String nameOfServiceCenter;
@@ -111,6 +101,7 @@ public class RepairRequest {
                          String customerPhone,
                          Employee acceptedBy,
                          List<WorkOrder> workOrders,
+                         PaymentTransactions paymentTransactions,
                          String nameOfServiceCenter,
                          String phoneNumberOfServiceCenter,
                          String addressOfServiceCenter) {
@@ -129,6 +120,7 @@ public class RepairRequest {
         this.customerPhone = customerPhone;
         this.acceptedBy = acceptedBy;
         this.workOrders = workOrders;
+        this.paymentTransactions = paymentTransactions;
         this.nameOfServiceCenter = nameOfServiceCenter;
         this.phoneNumberOfServiceCenter = phoneNumberOfServiceCenter;
         this.addressOfServiceCenter = addressOfServiceCenter;
