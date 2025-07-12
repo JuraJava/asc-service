@@ -24,6 +24,5 @@ public record RepairResponseDto(Long id,
                                 String phoneNumber,
                                 String address) {
 
-
 }
 

@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 013-create-payment-result
+      author: Yuri Danilov
+      changes:
+        - createTable:
+              tableName: payment_result
+              columns:
+                - column:
+                    name: id
+                    type: BIGSERIAL
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: payment_id
+                    type: BIGINT
+                - column:
+                    name: repair_request_id
+                    type: BIGINT
+                - column:
+                    name: accepted_by_id
+                    type: BIGINT
+                - column:
+                    name: amount
+                    type: DECIMAL(19,2)
+                - column:
+                    name: currency
+                    type: VARCHAR(10)
+                - column:
+                    name: type_of_payment
+                    type: VARCHAR(50)
+                - column:
+                    name: transaction_status
+                    type: VARCHAR(50)
+                - column:
+                    name: received_at
+                    type: TIMESTAMP
+                    defaultValueComputed: CURRENT_TIMESTAMP

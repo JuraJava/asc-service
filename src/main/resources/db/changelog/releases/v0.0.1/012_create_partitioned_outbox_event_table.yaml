@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 012-create-partitioned-outbox-event
+      author: Yuri Danilov
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: outbox_event
+                schemaName: asc_service
+      changes:
+        - sql:
+            splitStatements: false
+            stripComments: false
+            sql: |
+              CREATE TABLE outbox_event (
+                  id BIGSERIAL NOT NULL,
+                  aggregate_type VARCHAR(100) NOT NULL,
+                  aggregate_id VARCHAR(100) NOT NULL,
+                  event_type VARCHAR(100) NOT NULL,
+                  payload TEXT NOT NULL,
+                  status VARCHAR(20) NOT NULL,
+                  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  PRIMARY KEY (id, created_at)
+              ) PARTITION BY RANGE (created_at);
+
+#databaseChangeLog:
+#  - changeSet:
+##      id: 012-create-outbox-events
+#      id: 012-create-outbox-event
+#      author: Yuri Danilov
+#      changes:
+#        - createTable:
+##             tableName: payment_outbox
+#             tableName: outbox_event
+#             columns:
+#               - column:
+#                   name: id
+#                   type: BIGSERIAL
+#                   constraints:
+#                     primaryKey: true
+#                     nullable: false
+#                   autoIncrement: true
+#               - column:
+#                   name: aggregate_type
+#                   type: VARCHAR(100)
+#                   remarks: "Тип агрегата, т.е. PaymentTransaction"
+#                   constraints:
+#                     nullable: false
+#               - column:
+#                   name: aggregate_id
+#                   type: VARCHAR(100)
+#                   remarks: "id платёжной операции PaymentTransaction"
+#                   constraints:
+#                     nullable: false
+#               - column:
+#                   name: event_type
+#                   type: VARCHAR(100)
+#                   remarks: "Тип события"
+#                   constraints:
+#                     nullable: false
+#               - column:
+#                   name: payload
+#                   type: TEXT
+#                   remarks: "JSON-сериализованное содержимое события"
+#                   constraints:
+#                     nullable: false
+#               - column:
+#                   name: status
+#                   type: VARCHAR(20)
+#                   remarks: "OutboxEventStatus enum"
+#                   constraints:
+#                     nullable: false
+#               - column:
+#                   name: created_at
+#                   type: TIMESTAMP WITHOUT TIME ZONE
+#                   remarks: "По умолчанию — текущее"
+#                   defaultValueComputed: CURRENT_TIMESTAMP
+#                   constraints:
+#                     nullable: false

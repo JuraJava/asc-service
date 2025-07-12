@@ -1,5 +1,6 @@
 package com.yurdan.ascService.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -48,6 +49,7 @@ public class SparePart {
 
     @ManyToOne
     @JoinColumn(name = "device_id")
+//    @JsonBackReference
     private Device device;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "spareParts")

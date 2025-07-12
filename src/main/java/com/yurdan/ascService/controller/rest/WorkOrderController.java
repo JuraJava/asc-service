@@ -40,7 +40,7 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(workOrder);
         return ResponseEntity.ok(responseDto);
     }
-    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRANOR')")
+    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
     @PutMapping("/update-work-order/{workOrderId}")
     public ResponseEntity<WorkOrderResponseDto> updateWorkOrder(
             @PathVariable Long workOrderId,
@@ -51,7 +51,7 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(updatedWorkOrder);
         return ResponseEntity.ok(responseDto);
     }
-//    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
     @GetMapping("/work-orders")
     public ResponseEntity<Page<WorkOrderResponseDto>> getWorkOrders(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate completedDate,

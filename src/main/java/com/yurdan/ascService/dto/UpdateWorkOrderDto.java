@@ -2,15 +2,16 @@ package com.yurdan.ascService.dto;
 
 import com.yurdan.ascService.model.enums.PaymentStatus;
 import com.yurdan.ascService.model.enums.RepairStatus;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Builder
+
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UpdateWorkOrderDto {
     private String description;
     private RepairStatus repairStatus;
