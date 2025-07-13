@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Ilya Kosikov
+      changes:
+        - dropColumn:
+            tableName: employee
+            columnName: email
+
+        - addColumn:
+            tableName: employee
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    unique: true

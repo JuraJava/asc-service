@@ -14,10 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -66,23 +63,57 @@ public class DataInitializer {
                 }
             }
         }
-        List<SparePart> savedSpareParts = sparePartRepository.saveAll(spareParts);
+        sparePartRepository.saveAll(spareParts);
 
         List<Employee> employees = new ArrayList<>();
-        employees.add(Employee.builder().email("engineer@mail.ru").fullName("Инженеров Инженер").patronymic("Инженерович")
-                .role(RoleOfEmployee.ENGINEER).shareOfWork(0.4F).build());
-//        employees.add(Employee.builder().email("engineer@mail.ru").fullName("Мастеров Мастер").patronymic("Мастерович")
-//                .role(RoleOfEmployee.ENGINEER).shareOfWork(0.4F).build());
-        employees.add(Employee.builder().email("admin@mail.ru").fullName("Админский Админ").patronymic("Админович")
-                .role(RoleOfEmployee.ADMIN).shareOfWork(0.3F).build());
-        employees.add(Employee.builder().email("administrator@mail.ru").fullName("Администраторский Администр").patronymic("Админович")
-                .role(RoleOfEmployee.ADMINISTRATOR).shareOfWork(0.3F).build());
-        employees.add(Employee.builder().email("receiver@mail.ru").fullName("Приёмова Приемщица").patronymic("Приёмовна")
-                .role(RoleOfEmployee.RECEIVER).shareOfWork(0.2F).build());
-        employees.add(Employee.builder().email("storekeeper@mail.ru").fullName("Складских Кладовщик").patronymic("Коробович")
-                .role(RoleOfEmployee.STOREKEEPER).shareOfWork(0.4F).build());
-        employees.add(Employee.builder().email("director@mail.ru").fullName("Главнов Дирик").patronymic("Начальникевич")
-                .role(RoleOfEmployee.DIRECTOR).shareOfWork(0.4F).build());
+        employees.add(Employee.builder()
+                .fullName("Инженеров Инженер")
+                .patronymic("Инженерович")
+                .userId(UUID.fromString("9343d3da-836a-476c-bf97-476f700110be"))
+                .role(RoleOfEmployee.ENGINEER)
+                .shareOfWork(0.4F)
+                .build()
+        );
+        employees.add(Employee.builder()
+                .fullName("Админский Админ")
+                .patronymic("Админович")
+                .userId(UUID.fromString("78067406-4136-4284-9086-bd995b60acbe"))
+                .role(RoleOfEmployee.ADMIN)
+                .shareOfWork(0.3F)
+                .build()
+        );
+        employees.add(Employee.builder()
+                .fullName("Администраторский Администр")
+                .patronymic("Админович")
+                .userId(UUID.fromString("937b3975-c60d-4436-81c7-708d6bc39afa"))
+                .role(RoleOfEmployee.ADMINISTRATOR)
+                .shareOfWork(0.3F)
+                .build()
+        );
+        employees.add(Employee.builder()
+                .fullName("Приёмова Приемщица")
+                .patronymic("Приёмовна")
+                .userId(UUID.fromString("28fc7f1b-1b32-44f0-9ec9-66b0c1fdc392"))
+                .role(RoleOfEmployee.RECEIVER)
+                .shareOfWork(0.2F)
+                .build()
+        );
+        employees.add(Employee.builder()
+                .fullName("Складских Кладовщик")
+                .patronymic("Коробович")
+                .userId(UUID.fromString("a86e009d-e7c6-427f-82c6-9fb9942671ab"))
+                .role(RoleOfEmployee.STOREKEEPER)
+                .shareOfWork(0.4F)
+                .build()
+        );
+        employees.add(Employee.builder()
+                .fullName("Главнов Дирик")
+                .patronymic("Начальникевич")
+                .userId(UUID.fromString("1b23b18d-ce45-4d30-888f-3dd524d337e7"))
+                .role(RoleOfEmployee.DIRECTOR)
+                .shareOfWork(0.4F)
+                .build()
+        );
         employeeRepository.saveAll(employees);
     }
 

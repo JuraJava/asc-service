@@ -1,7 +1,6 @@
 package com.yurdan.ascService.config;
 
 import com.yurdan.ascService.security.JwtFilter;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,11 +8,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.stream.Stream;
@@ -26,8 +26,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .exceptionHandling(eh -> eh
                         .authenticationEntryPoint(unauthorizedEntryPoint())
                 )
-                .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -51,23 +51,18 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(new RequestMatcher() {
-            @Override
-            public boolean matches(HttpServletRequest request) {
-                return HttpMethod.OPTIONS.matches(request.getMethod())
-                        || Stream.of(
-                        "/api/swagger-ui/**",
-                        "/api/swagger-config",
-                        "/api",
-                        "/api/doc",
-                        "/metrics/**",
-                        "/health/**",
-                        "/info/**",
-                        "/loggers/**",
-                        "/internal/*"
-                ).anyMatch(pattern -> new AntPathRequestMatcher(pattern).matches(request));
-            }
-        });
+        return web -> web.ignoring().requestMatchers(request -> HttpMethod.OPTIONS.matches(request.getMethod())
+                || Stream.of(
+                "/api/swagger-ui/**",
+                "/api/swagger-config",
+                "/api",
+                "/api/doc",
+                "/metrics/**",
+                "/health/**",
+                "/info/**",
+                "/loggers/**",
+                "/internal/*"
+        ).anyMatch(pattern -> new AntPathRequestMatcher(pattern).matches(request)));
     }
 }
 

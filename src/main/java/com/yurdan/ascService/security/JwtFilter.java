@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
 @Component
@@ -31,6 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
+            log.info("doFilterInternal");
             String header = request.getHeader(AUTH_HEADER);
 
             if (header != null && header.startsWith(TOKEN_PREFIX)) {
@@ -42,9 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     return;
                 }
 
-                Map<String, Object> payload = jwtUtils.getPayload(token);
-
-                JwtAuthentication authentication = JwtAuthentication.fromPayload(payload);
+                JwtAuthentication authentication = jwtUtils.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
