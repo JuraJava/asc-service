@@ -4,7 +4,7 @@ import com.yurdan.ascService.dto.*;
 import com.yurdan.ascService.service.PaymentTransactionsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,11 +18,11 @@ public class PaymentTransactionsController {
         this.transactionsService = transactionsService;
     }
 
-    @PreAuthorize("hasAnyAuthority('RECEIVER', 'ADMINISTRATOR')")
+//    @PreAuthorize("hasAnyAuthority('RECEIVER', 'ADMINISTRATOR')")
     @PostMapping("/payment-transaction")
     public ResponseEntity<PaymentTransactionsResponseDto> createPaymentTransactions(
             @Valid @RequestBody PaymentTransactionsRequestDto requestDto) {
-        // 🟢 Уже получаем DTO
+        // Уже получаем DTO
         PaymentTransactionsResponseDto responseDto = transactionsService.createPaymentTransactions(requestDto);
         return ResponseEntity.ok(responseDto);
     }
