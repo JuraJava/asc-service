@@ -301,4 +301,13 @@ public class WorkOrderService {
 
         return workOrderRepository.findAll(spec, pageable).map(workOrderMapper::toDto);
     }
+
+    public Optional<WorkOrder> getByRepairRequestId(Long repairRequestId) {
+        return workOrderRepository.findByRepairRequestId(repairRequestId);
+    }
+
+    public Optional<WorkOrder> getById(Long workOrderId) {
+        return workOrderRepository.findById(workOrderId);
+    }
+
 }

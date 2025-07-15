@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/asc")
@@ -68,4 +69,29 @@ public class WorkOrderController {
         );
         return ResponseEntity.ok(responseDto);
     }
+
+    @GetMapping("/work-orders/by-repair-request/{repairRequestId}")
+    public ResponseEntity<WorkOrderResponseDto> getByRepairRequestId(@PathVariable Long repairRequestId) {
+        Optional<WorkOrder> optional = workOrderService.getByRepairRequestId(repairRequestId);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/work-orders/{id}")
+    public ResponseEntity<WorkOrderResponseDto> getWorkOrderById(@PathVariable Long id) {
+        Optional<WorkOrder> optional = workOrderService.getById(id);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
+        return ResponseEntity.ok(dto);
+    }
+
 }
