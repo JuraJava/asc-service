@@ -20,6 +20,12 @@ import java.util.List;
 public class DeviceDto {
     private Long id;
     private String name;
-    private String deviceColor;
+    private DeviceColor deviceColor;
     private List<SparePartDto> spareParts;
+
+    public DeviceDto(Long id, String name, DeviceColor deviceColor) {
+        this.id = id;
+        this.name = name;
+        this.deviceColor = deviceColor;
+    }
 }

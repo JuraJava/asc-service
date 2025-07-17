@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * MapStruct не может сам "по ID достать сущность" — он просто копирует поля,
+ * поэтому вручную создаётся вспомогательный класс — EntityReferenceMapper.
+ *  Это утилитарный класс, который используется с MapStruct для маппинга ID ↔ Entity/DTO объектов,
+ *  особенно когда нет необходимости загружать сущности из БД.
+ *  Этот класс нужен, чтобы MapStruct умел маппить не только простые поля,
+ *  но и связанные сущности по ID — без обращения к БД.
+ */
 @Component
 public class EntityReferenceMapper {
 
