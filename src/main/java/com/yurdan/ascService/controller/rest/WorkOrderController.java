@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * Это REST-контроллер, который управляет заказ-нарядами на работу в сервисном центре.
+ */
 @RestController
 @RequestMapping("/asc")
 public class WorkOrderController {
@@ -31,6 +34,10 @@ public class WorkOrderController {
         this.workOrderService = workOrderService;
         this.workOrderMapper = workOrderMapper;
     }
+
+    /**
+     * Создания нарядов
+     */
 //    @PreAuthorize("hasAnyAuthority('ENGINEER')")
     @PostMapping("/create-work-order")
     public ResponseEntity<WorkOrderResponseDto> createWorkOrder(
@@ -41,6 +48,10 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(workOrder);
         return ResponseEntity.ok(responseDto);
     }
+
+    /**
+     * Изменение нарядов.
+     */
 //    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
     @PutMapping("/update-work-order/{workOrderId}")
     public ResponseEntity<WorkOrderResponseDto> updateWorkOrder(
@@ -52,6 +63,10 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(updatedWorkOrder);
         return ResponseEntity.ok(responseDto);
     }
+
+    /**
+     * Получение списка нарядов с фильтрацией.
+     */
 //    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
     @GetMapping("/work-orders")
     public ResponseEntity<Page<WorkOrderResponseDto>> getWorkOrders(
@@ -70,6 +85,9 @@ public class WorkOrderController {
         return ResponseEntity.ok(responseDto);
     }
 
+    /**
+     * Получения заказ-наряда по ID заявки на ремонт.
+     */
     @GetMapping("/work-orders/by-repair-request/{repairRequestId}")
     public ResponseEntity<WorkOrderResponseDto> getByRepairRequestId(@PathVariable Long repairRequestId) {
         Optional<WorkOrder> optional = workOrderService.getByRepairRequestId(repairRequestId);
@@ -82,6 +100,9 @@ public class WorkOrderController {
         return ResponseEntity.ok(dto);
     }
 
+    /**
+     * Получения заказ-наряда по его ID.
+     */
     @GetMapping("/work-orders/{id}")
     public ResponseEntity<WorkOrderResponseDto> getWorkOrderById(@PathVariable Long id) {
         Optional<WorkOrder> optional = workOrderService.getById(id);

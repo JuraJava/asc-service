@@ -6,6 +6,11 @@ import lombok.Builder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Этот класс представляет собой DTO, используемый для отправки данных о заявке на ремонт клиенту,
+ * оформлен в виде record, что делает его иммутабельным (значения нельзя изменить после создания),
+ * позволяет создавать экземпляры класса с помощью builder-паттерна.
+ */
 @Builder
 public record RepairResponseDto(Long id,
                                 String device,

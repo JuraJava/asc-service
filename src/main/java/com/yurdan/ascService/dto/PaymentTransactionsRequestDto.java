@@ -7,6 +7,10 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Класс — это DTO, который используется для входящего запроса на создание платёжной транзакции в системе  через API.
+ * Обычно его получает контроллер от клиента (UI или другой сервис).
+ */
 @Builder
 @Getter
 @Setter
@@ -25,6 +29,5 @@ public class PaymentTransactionsRequestDto {
 
     @NotNull(message = "Accepted by id is required")
     private Long acceptedById;;
-
 
 }

@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Это класс DTO, который используется для передачи информации об устройстве между слоями приложения или через API.
+ */
 //public record DeviceDto(Long id, String name, DeviceColor color) {
 //}
 @Getter

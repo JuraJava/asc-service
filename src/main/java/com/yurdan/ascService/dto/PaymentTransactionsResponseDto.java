@@ -9,6 +9,10 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Класс — это DTO, предназначенный для ответа клиенту после выполнения платёжной транзакции.
+ * Он передаётся из сервиса/контроллера в JSON-ответе клиенту.
+ */
 @Builder
 @Setter
 @Getter

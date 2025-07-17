@@ -6,7 +6,10 @@ import lombok.*;
 
 import java.util.List;
 
-
+/**
+ * Класс DTO используется для обновления наряда на выполнение работ (Work Order),
+ * используется в @PutMapping или @PatchMapping в контроллере.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
