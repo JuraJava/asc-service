@@ -24,6 +24,11 @@ import java.time.LocalTime;
 import java.util.stream.Collectors;
 import java.util.*;
 
+/**
+ * Это сервисный класс, который отвечает за создание, обновление и поиск заказов на ремонт (WorkOrder).
+ * Используются различные Entity, DTO, репозитории (DAO) и мапперы для преобразования между Entity и DTO.
+ * Применены Spring Data JPA, транзакции, спецификации для динамического фильтра поиска и кастомные исключения.
+ */
 @Service
 public class WorkOrderService {
 
@@ -50,6 +55,19 @@ public class WorkOrderService {
         this.workOrderMapper = workOrderMapper;
     }
 
+    /**
+     * Создаётся новый заказ на ремонт на основе заявки.
+     * Получаем сотрудника по performedById, проверяем, что он инженер (RoleOfEmployee.ENGINEER), иначе бросаем исключение.
+     * Получаем заявку на ремонт по dto.getRepairRequestId(), если не нашли — исключение.
+     * Проверяем статус заявки: нельзя создавать заказ если заявка "на оплате" (ON_PAYMENT) или "закрыта" (CLOSED).
+     * Обновляем статус заявки на AT_WORK (в работе).
+     * Получаем списки выполненных работ и запчастей по ID из DTO.
+     * Для каждой запчасти проверяем, что количество на складе больше 0, иначе — исключение SparePartUnavailableException.
+     * Обновляем количество запчастей: уменьшаем количество на складе и увеличиваем резерв.
+     * Считаем суммарную стоимость работ и запчастей.
+     * Рассчитываем зарплату инженера по формуле: стоимость работы * доля инженера.
+     * Создаём объект WorkOrder, заполняем поля, сохраняем в БД.
+     */
     @Transactional
     public WorkOrder createWorkOrder(CreateWorkOrderDto dto, Long performedById) {
         Employee performer = employeeRepository.findById(performedById)
@@ -105,6 +123,13 @@ public class WorkOrderService {
         return workOrderRepository.save(workOrder);
     }
 
+    /**
+     * Получаем сотрудника-редактора и заказ по ID, проверяем их существование.
+     * Если заказ закрыт (RepairStatus.CLOSED), запрещаем редактирование — выбрасываем исключение.
+     * Проверяем, является ли редактор инженером, который выполняет заказ, или сотрудником с привилегиями (приёмщик, администратор).
+     * Если нет прав — исключение.
+     * Вызываем защищённый метод updateWorkOrderTransactional для выполнения обновления в рамках транзакции.
+     */
     public WorkOrder updateWorkOrder(Long workOrderId, UpdateWorkOrderDto dto, Long employeeId) {
         Employee editor = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
@@ -128,6 +153,23 @@ public class WorkOrderService {
         return updateWorkOrderTransactional(workOrder, dto, editor);
     }
 
+    /**
+     * Здесь происходит вся логика обновления заказа.
+     * Обновление инженера, который выполняет заказ, с проверками роли.
+     * Изменение статуса заказа с соблюдением бизнес-логики:
+     * Закрыть заказ можно только если он был в статусе COMPLETED.
+     * Только привилегированные сотрудники могут закрыть заказ.
+     * При закрытии автоматически меняется статус оплаты на PAID и уменьшается резерв запчастей.
+     * Если заказ отменяется (CANCELLED), возвращаем запчасти на склад, очищаем списки работ и деталей, обнуляем стоимость и статус оплаты.
+     * Для статусов COMPLETED и AT_WORK устанавливаем или сбрасываем дату завершения и статус оплаты.
+     * Обработка изменения списка запчастей:
+     * Находим какие запчасти были удалены или добавлены.
+     * Для удалённых запчастей уменьшаем резерв и увеличиваем количество на складе.
+     * Для новых — проверяем наличие на складе, уменьшаем количество и увеличиваем резерв.
+     * Обновление списка выполненных работ.
+     * Пересчёт стоимости работ, деталей, итоговой суммы и зарплаты инженера, если что-то изменилось.
+     * Сохраняем заказ в БД и возвращаем.
+     */
     @Transactional
     protected WorkOrder updateWorkOrderTransactional(WorkOrder workOrder, UpdateWorkOrderDto dto, Employee editor) {
         boolean modified = false;
@@ -154,8 +196,12 @@ public class WorkOrderService {
                 boolean isPrivileged = editor.getRole() == RoleOfEmployee.RECEIVER ||
                         editor.getRole() == RoleOfEmployee.ADMINISTRATOR;
 
-                if (!isPrivileged && !editor.getId().equals(workOrder.getPerformedBy().getId())) {
-                    throw new UnauthorizedWorkOrderUpdateException("Только исполнитель или привилегированный персонал может закрыть заказ");
+//                if (!isPrivileged && !editor.getId().equals(workOrder.getPerformedBy().getId())) {
+//                    throw new UnauthorizedWorkOrderUpdateException("Только исполнитель или привилегированный персонал может закрыть заказ");
+//                }
+
+                if (!isPrivileged) {
+                    throw new UnauthorizedWorkOrderUpdateException("Только привилегированный персонал может закрыть заказ");
                 }
 
                 if (originalStatus != RepairStatus.COMPLETED) {
@@ -266,6 +312,11 @@ public class WorkOrderService {
         return workOrderRepository.save(workOrder);
     }
 
+    /**
+     * Метод для получения страниц заказов с фильтрацией по дате завершения, статусам ремонта и оплаты, ID заявки и ID исполнителя.
+     * Формируется динамическая спецификация (условия поиска) с помощью Specification для JPA.
+     * Возвращается страница DTO заказов.
+     */
     @Transactional(readOnly = true)
     public Page<WorkOrderResponseDto> getFilteredWorkOrders(
             LocalDate completedDate,
@@ -302,12 +353,17 @@ public class WorkOrderService {
         return workOrderRepository.findAll(spec, pageable).map(workOrderMapper::toDto);
     }
 
+    /**
+     * Возвращает заказ по ID заявки на ремонт.
+     */
     public Optional<WorkOrder> getByRepairRequestId(Long repairRequestId) {
         return workOrderRepository.findByRepairRequestId(repairRequestId);
     }
 
+    /**
+     * Возвращает заказ по ID самого заказа (Optional).
+     */
     public Optional<WorkOrder> getById(Long workOrderId) {
         return workOrderRepository.findById(workOrderId);
     }
-
 }

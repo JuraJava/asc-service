@@ -21,9 +21,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Этот класс  — глобальный обработчик исключений в Spring Boot приложении. Он обеспечивает централизованную обработку
+ * всех ошибок, возникающих при выполнении REST-запросов, и формирует удобные и понятные ответы клиенту,
+ * вместо стандартных Java-ошибок. @RestControllerAdvice - делает этот класс глобальным обработчиком
+ * ошибок для всех контроллеров в приложении, все ответы возвращаются в формате JSON.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+    /**
+     * Вызывается, если не удалось прочитать/распарсить тело запроса.
+     * Обрабатываются случаи:
+     * UnrecognizedPropertyException – неизвестное поле в JSON.
+     * InvalidFormatException – неправильный формат поля.
+     * Возвращает: 400 Bad Request.
+     */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         Throwable cause = ex.getCause();
@@ -42,21 +54,30 @@ public class GlobalExceptionHandler {
                 "error", "The data could not be uploaded. We are already working on a solution to this problem!"
         ));
     }
-
+    /**
+     * Вызывается если метод не поддерживается, например, вызван POST, а поддерживается только GET.
+     * Возвращает: 405 Method Not Allowed.
+     */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<Map<String, String>> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(Map.of(
                 "error", "The method is specified incorrectly. Specify the correct method!"
         ));
     }
-
+    /**
+     * Вызывается если ошибки валидации данных (например, пустое поле, неверная длина).
+     * Возвращает: 400 Bad Request.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         return ResponseEntity.badRequest().body(Map.of(
                 "error", "The data could not be uploaded. We are already working on a solution to this problem!"
         ));
     }
-
+    /**
+     * Вызывается при ошибках валидации на уровне параметров, например, проверка параметра запроса: @Size(min=3)
+     * Собирает ошибки в Map<field, message> и отправляет их клиенту.
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolation(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -67,7 +88,10 @@ public class GlobalExceptionHandler {
         });
         return ResponseEntity.badRequest().body(errors);
     }
-
+    /**
+     * Обрабатывает любые ошибки подключения, транзакций и запросов к БД.
+     * Возвращает: 500 Internal Server Error.
+     */
     @ExceptionHandler({
             SQLException.class,
             DataAccessException.class,
@@ -82,30 +106,17 @@ public class GlobalExceptionHandler {
         ));
     }
 
+    /**
+     * Общий обработчик для всех остальных исключений
+     * Ловит все непредвиденные ошибки, которые не были перехвачены ранее.
+     * Выводит стек ошибки в консоль: ex.printStackTrace().
+     * Разделяет:
+     * Пользовательские ошибки (например, EmployeeNotFoundException) – возвращает 400 с сообщением.
+     * Непредвиденные ошибки – возвращает 500.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
         ex.printStackTrace(); // <-- Добавлен вывод стектрейса в консоль
-
-//        if (ex instanceof DeviceNotFoundException ||
-//                ex instanceof EmployeeNotFoundException ||
-//                ex instanceof EngineerNotFoundException ||
-//                ex instanceof EngineerRoleRequiredException ||
-//                ex instanceof NoPaymentForWarrantyRepairs ||
-//                ex instanceof NotAllWorkOrdersClosedException ||
-//                ex instanceof NoWorkOrdersForRepairRequestException ||
-//                ex instanceof PaymentTransactionAlreadyExistsException ||
-//                ex instanceof ProhibitionCreateOrderBasedOnClosedOOrOnPaymentRequestException ||
-//                ex instanceof RepairRequestNotFoundException ||
-//                ex instanceof RepairStatusViolationException ||
-//                ex instanceof SparePartUnavailableException ||
-//                ex instanceof UnauthorizedActionException ||
-//                ex instanceof UnauthorizedWorkOrderUpdateException ||
-//                ex instanceof WorkOrderNotFoundException) {
-//            // Лучше вернуть понятный ответ, чем пробрасывать дальше
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-//                    "error", ex.getMessage()
-//            ));
-//        }
 
         Set<Class<?>> badRequestExceptions = Set.of(
                 DeviceNotFoundException.class,
@@ -135,5 +146,4 @@ public class GlobalExceptionHandler {
                 "error", "An unexpected error occurred. We are already working on a solution!"
         ));
     }
-
 }
