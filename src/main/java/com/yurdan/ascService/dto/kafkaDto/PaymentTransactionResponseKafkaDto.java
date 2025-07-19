@@ -9,6 +9,10 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Класс представляет собой DTO, предназначенный для передачи данных о платёжной транзакции через Kafka
+ * или другие внешние системы, содержит информацию о платеже по заявке на ремонт.
+ */
 @Setter
 @Getter
 @NoArgsConstructor

@@ -13,11 +13,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+
+/**
+ * Класс - это REST-контроллер, отвечающий за работу с заявками на ремонт (RepairRequest).
+ */
 @Slf4j
 @RestController
 @RequestMapping("/asc/repair-request")
@@ -31,7 +35,10 @@ public class RepairRequestController {
         this.repairRequestMapper = repairRequestMapper;
     }
 
-    @PreAuthorize("hasAnyAuthority('RECEIVER')")
+    /**
+     * Создание новой заявки на ремонт
+     */
+//    @PreAuthorize("hasAnyAuthority('RECEIVER')")
     @PostMapping("/create-repair-request")
     public ResponseEntity<RepairResponseDto> createRepairRequest(
             @Valid @RequestBody RepairRequestDto dto) {
@@ -40,6 +47,9 @@ public class RepairRequestController {
         return ResponseEntity.ok(responseDto);
     }
 
+    /**
+     * Получение списка заявок с фильтрацией
+     */
     @GetMapping("/repair-requests")
     public ResponseEntity<Page<RepairResponseDto>> getRepairRequests(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate createdDate,
@@ -70,7 +80,11 @@ public class RepairRequestController {
         );
         return ResponseEntity.ok(response);
     }
-    @PreAuthorize("hasAnyAuthority('RECEIVER')")
+
+    /**
+     * Обновление информации о заявленной неисправности (дефекте)
+     */
+//    @PreAuthorize("hasAnyAuthority('RECEIVER')")
     @PatchMapping("/repair-request/update-defect")
     public ResponseEntity<RepairResponseDto> updateDefect(@Valid @RequestBody UpdateDefectDto dto) {
         RepairResponseDto response = serviceAscService.updateDefect(dto);

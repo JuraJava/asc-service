@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Этот класс  — это REST-контроллер, который обрабатывает HTTP-запросы, связанные с устройствами (Device).
+ * Он работает с DTO-объектами (DeviceDto, DeviceSelectDto) и взаимодействует с сервисным слоем через DeviceService.
+ * Предоставляет два API:
+ * /asc/device/get-all     -   для получения всех устройств с пагинацией и сортировкой,
+ * и
+ * /asc/device/get-devices-for-select?name=...
+ * для выбора устройства из списка по части названия.
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor

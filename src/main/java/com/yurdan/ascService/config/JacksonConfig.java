@@ -7,9 +7,16 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Этот класс JacksonConfig — это конфигурация для настройки JSON-сериализации и десериализации в Spring Boot приложении
+ * с использованием Jackson (библиотеки для работы с JSON).
+ */
 @Configuration
 public class JacksonConfig {
 
+    /**
+     * Метод создает и возвращает настроенный экземпляр ObjectMapper
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();

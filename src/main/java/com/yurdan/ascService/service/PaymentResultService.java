@@ -8,6 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Этот класс — это сервисный компонент, предназначенный для:
+ * обработки информации о результатах платежей,
+ * сохранения объекта PaymentResult в БД через репозиторий,
+ * логирования операций сохранения.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

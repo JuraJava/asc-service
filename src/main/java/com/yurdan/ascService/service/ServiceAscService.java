@@ -27,6 +27,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
+/**
+ * Это сервисный класс, который работает с заявками на ремонт в сервисном центре.
+ * Использует Spring Data JPA Specification для построения динамических запросов.
+ * Использует мапперы для преобразования сущностей в DTO.
+ */
 @Slf4j
 @Service
 public class ServiceAscService {
@@ -55,6 +60,7 @@ public class ServiceAscService {
         this.repairRequestMapper = repairRequestMapper;
     }
 
+    // Создание заявки на ремонт.
     public RepairRequest createRepairRequest(RepairRequestDto dto) {
         Optional<RepairRequest> existing = repairRequestRepository.findBySerialNumber(dto.getSerialNumber());
         if (existing.isPresent()) {
@@ -64,16 +70,16 @@ public class ServiceAscService {
         // Проверяем наличие устройств и сотрудника
         Device device = deviceRepository.findById(dto.getDeviceId())
                 .orElseThrow(() -> {
-                            System.out.println("Device not found");
-                   throw  new DeviceNotFoundException(dto.getDeviceId());
+                    System.out.println("Device not found");
+                    throw new DeviceNotFoundException(dto.getDeviceId());
                 });
         Employee acceptedBy = employeeRepository.findById(dto.getAcceptedById())
                 .orElseThrow(() -> new EmployeeNotFoundException(dto.getAcceptedById()));
 
-        RepairRequest request  = RepairRequest.builder()
+        RepairRequest request = RepairRequest.builder()
                 .requestStatus(RequestStatus.ACCEPTED)
                 .nameOfServiceCenter(nameOfCenter)
-                .phoneNumberOfServiceCenter (phoneNumber)
+                .phoneNumberOfServiceCenter(phoneNumber)
                 .addressOfServiceCenter(address)
                 .typeOfRepair(dto.getTypeOfRepair())
                 .device(device)
@@ -91,6 +97,7 @@ public class ServiceAscService {
         return repairRequestRepository.save(request);
     }
 
+    // Получение списка заявок с фильтрацией
     public Page<RepairResponseDto> getFilteredRepairRequests(
             LocalDate createdDate,
             TypeOfRepair typeOfRepair,
@@ -128,6 +135,7 @@ public class ServiceAscService {
                 .map(repairRequestMapper::toDto);
     }
 
+    // Обновление информации о дефекте в заявке
     @Transactional
     public RepairResponseDto updateDefect(UpdateDefectDto dto) {
         RepairRequest repairRequest = repairRequestRepository.findById(dto.getId())

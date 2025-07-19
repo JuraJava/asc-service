@@ -13,11 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
+/**
+ * Это REST-контроллер, который управляет заказ-нарядами на работу в сервисном центре.
+ */
 @RestController
 @RequestMapping("/asc")
 public class WorkOrderController {
@@ -30,7 +34,11 @@ public class WorkOrderController {
         this.workOrderService = workOrderService;
         this.workOrderMapper = workOrderMapper;
     }
-    @PreAuthorize("hasAnyAuthority('ENGINEER')")
+
+    /**
+     * Создания нарядов
+     */
+//    @PreAuthorize("hasAnyAuthority('ENGINEER')")
     @PostMapping("/create-work-order")
     public ResponseEntity<WorkOrderResponseDto> createWorkOrder(
             @Valid @RequestBody CreateWorkOrderDto createWorkOrderDto,
@@ -40,7 +48,11 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(workOrder);
         return ResponseEntity.ok(responseDto);
     }
-    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
+
+    /**
+     * Изменение нарядов.
+     */
+//    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
     @PutMapping("/update-work-order/{workOrderId}")
     public ResponseEntity<WorkOrderResponseDto> updateWorkOrder(
             @PathVariable Long workOrderId,
@@ -51,7 +63,11 @@ public class WorkOrderController {
         WorkOrderResponseDto responseDto = workOrderMapper.toDto(updatedWorkOrder);
         return ResponseEntity.ok(responseDto);
     }
-    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
+
+    /**
+     * Получение списка нарядов с фильтрацией.
+     */
+//    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
     @GetMapping("/work-orders")
     public ResponseEntity<Page<WorkOrderResponseDto>> getWorkOrders(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate completedDate,
@@ -68,4 +84,35 @@ public class WorkOrderController {
         );
         return ResponseEntity.ok(responseDto);
     }
+
+    /**
+     * Получения заказ-наряда по ID заявки на ремонт.
+     */
+    @GetMapping("/work-orders/by-repair-request/{repairRequestId}")
+    public ResponseEntity<WorkOrderResponseDto> getByRepairRequestId(@PathVariable Long repairRequestId) {
+        Optional<WorkOrder> optional = workOrderService.getByRepairRequestId(repairRequestId);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
+        return ResponseEntity.ok(dto);
+    }
+
+    /**
+     * Получения заказ-наряда по его ID.
+     */
+    @GetMapping("/work-orders/{id}")
+    public ResponseEntity<WorkOrderResponseDto> getWorkOrderById(@PathVariable Long id) {
+        Optional<WorkOrder> optional = workOrderService.getById(id);
+
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
+        return ResponseEntity.ok(dto);
+    }
+
 }

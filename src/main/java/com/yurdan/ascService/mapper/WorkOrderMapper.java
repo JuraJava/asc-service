@@ -6,7 +6,12 @@ import com.yurdan.ascService.model.entity.WorkOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
- @Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
+/**
+ * Преобразует объект CreateWorkOrderDto → в сущность WorkOrder чтобы сохранить в БД,
+ * преобразует сущность WorkOrder → в WorkOrderResponseDto для отправки клиенту через API,
+ * использует вспомогательные методы из EntityReferenceMapper для обработки связанных сущностей.
+ */
+@Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
  public interface WorkOrderMapper {
     // DTO → Entity
     @Mapping(source = "repairRequestId", target = "repairRequest", qualifiedByName = "mapRepairRequestById")

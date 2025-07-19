@@ -7,6 +7,12 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * Класс DTO используется для передачи данных между слоями приложения:
+ * из БД → в сервис → в контроллер → в API
+ * или в обратную сторону — из запроса клиента → в контроллер → в сервис,
+ * в данном случае SparePartDto — это представление запасной части.
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,5 +24,5 @@ public class SparePartDto {
     private Long remainingQuantity;
     private Long reserveQuantity;
     private BigDecimal cost;
-    //  БЕЗ поля Device!
+    //  БЕЗ поля Device чтобы избежать циклических зависимостей
 }

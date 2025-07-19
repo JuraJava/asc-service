@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * 	Этот класс получает JSON-сообщение из Kafka-топика payment-response-topic,
+ * 	преобразует сообщение в DTO (PaymentTransactionResponseKafkaDto),
+ * 	преобразует DTO в сущность PaymentResult,
+ * 	сохраняет эту сущность в БД через сервис,
+ * 	логирует шаги и обрабатывает исключения
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

@@ -8,6 +8,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+/**
+ * Этот интерфейс определяет правила, как маппить (конвертировать) объекты между слоями приложения.
+ * uses = EntityReferenceMapper.class указывает MapStruct использовать дополнительный маппер EntityReferenceMapper,
+ * когда нужно преобразовать или найти сущности по ID
+ */
 @Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
 public interface PaymentTransactionsMapper {
     // DTO → Entity

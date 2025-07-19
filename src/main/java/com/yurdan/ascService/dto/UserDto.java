@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Предназначен для представления информации о пользователе в приложении  при входе в систему.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

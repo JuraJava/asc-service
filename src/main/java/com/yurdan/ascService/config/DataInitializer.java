@@ -17,6 +17,13 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+/**
+ * Этот класс служит инициализатором тестовых данных при запуске Spring Boot-приложения.
+ * Он автоматически наполняет базу данных фейковыми устройствами, запчастями и сотрудниками,
+ * если в application.yaml включена настройка app.init-data:true
+ */
+
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "app", value = "init-data", havingValue = "true")
@@ -28,6 +35,12 @@ public class DataInitializer {
 
     private static final String[] sparePartsLetters = {"A", "B", "C"};
     private static final String[] deviceLetters = {"G", "R", "N"};
+
+    /**
+     * Основной метод инициализации
+     * т.к. помечен @PostConstruct, выполнится один раз при старте приложения,
+     * создаётся 50 фейковых устройств и сохраняются в БД.
+     */
 
     @PostConstruct
     public void init() {
@@ -152,6 +165,10 @@ public class DataInitializer {
                 .deviceColor(colorGenerator())
                 .build();
     }
+
+    /**
+     * Запчасти группируются по типам, определяемым этим методом
+     */
 
     private String getSparePartTypeFromBatch(String batchNumber) {
         try {

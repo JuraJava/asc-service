@@ -37,6 +37,12 @@ spring:
       hibernate:
         default_schema: ${APP_POSTGRESQL_SCHEMA:asc_service}
 #        default_schema: ${APP_POSTGRESQL_SCHEMA:public}
+
+#  Временно отключаем security
+  autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/releases/db.changelog-master.yaml
@@ -79,3 +85,4 @@ eureka:
     enabled: ${EUREKA_ENABLED:false} # Флаг для включения/выключения
 app:
   init-data: false
+

@@ -9,6 +9,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+/**
+ * Этот интерфейс отвечает за маппинг между DTO и Entity:
+ * преобразует RepairRequestDto → RepairRequest (DTO → Entity) и обратно,
+ * подключает вспомогательный EntityReferenceMapper для преобразования ID ↔ Entity
+ */
 @Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
 public interface RepairRequestMapper {
 

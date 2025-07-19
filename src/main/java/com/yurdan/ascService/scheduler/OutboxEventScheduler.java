@@ -17,6 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Это класс планировщик задач, который периодически читает события из таблицы Outbox (в статусе READY),
+ * отправляет их в Kafka, обновляет статус события на SENT после успешной отправки.
+ * Это типичная реализация "Outbox Pattern" — шаблона надёжной доставки событий из БД в брокер сообщений (Kafka).
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -30,6 +35,9 @@ public class OutboxEventScheduler {
 
     private final CompletedWorkRepository completedWorkRepository;
 
+    /**
+     * Этот метод выполняется каждые fixedDelayString миллисекунд, где fixedDelayString берется из application.yaml
+     */
     @Scheduled(fixedDelayString = "${scheduler.outbox.fixed-delay-ms}")
     public void publishOutboxEvents() {
         List<OutboxEvent> events = outboxEventRepository.findTop10ByStatusOrderByCreatedAtAsc(OutboxEventStatus.READY);

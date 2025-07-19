@@ -10,6 +10,12 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Этот класс отвечает за автоматическое управление партициями (разделами) таблицы outbox_event в PostgreSQL.
+ * Это часть реализации Outbox Pattern, где данные организуются по
+ * дням — для производительности и удобного удаления старых записей.
+ * retentionDays — число дней, сколько хранить партиции, которое указывается в application.yml
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -58,6 +64,9 @@ public class OutboxPartitionScheduler {
         }
     }
 
+    /**
+     * Этот метод проверяет, существует ли партиция в базе.
+     */
     private boolean partitionAlreadyExists(String partitionSuffix) {
         try {
             String checkSql = """
