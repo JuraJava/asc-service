@@ -19,4 +19,10 @@ public class DeviceDto {
     private String name;
     private String deviceColor;
     private List<SparePartDto> spareParts;
+
+    public DeviceDto(Long id, String name, DeviceColor deviceColor) {
+        this.id = id;
+        this.name = name;
+        this.deviceColor = deviceColor.toString();
+    }
 }
