@@ -29,7 +29,6 @@ public class OutboxEventScheduler {
     private final OutboxEventRepository outboxEventRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    // Если Kafka-топик фиксирован, можно хардкодить:
     @Value("${kafka.payment.topic-in}")
     private String TOPIC;
 

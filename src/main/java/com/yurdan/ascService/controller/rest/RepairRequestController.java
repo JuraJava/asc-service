@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class RepairRequestController {
     /**
      * Создание новой заявки на ремонт
      */
-//    @PreAuthorize("hasAnyAuthority('RECEIVER')")
+    @PreAuthorize("hasAnyAuthority('RECEIVER')")
     @PostMapping("/create-repair-request")
     public ResponseEntity<RepairResponseDto> createRepairRequest(
             @Valid @RequestBody RepairRequestDto dto) {
@@ -84,7 +85,7 @@ public class RepairRequestController {
     /**
      * Обновление информации о заявленной неисправности (дефекте)
      */
-//    @PreAuthorize("hasAnyAuthority('RECEIVER')")
+    @PreAuthorize("hasAnyAuthority('RECEIVER')")
     @PatchMapping("/repair-request/update-defect")
     public ResponseEntity<RepairResponseDto> updateDefect(@Valid @RequestBody UpdateDefectDto dto) {
         RepairResponseDto response = serviceAscService.updateDefect(dto);

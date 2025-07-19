@@ -5,6 +5,7 @@ import com.yurdan.ascService.service.PaymentTransactionsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,7 +28,7 @@ public class PaymentTransactionsController {
      * используется при включённой Spring Security,
      * метод  защищён авторизацией.
      */
-//    @PreAuthorize("hasAnyAuthority('RECEIVER', 'ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('RECEIVER', 'ADMINISTRATOR')")
     @PostMapping("/payment-transaction")
     public ResponseEntity<PaymentTransactionsResponseDto> createPaymentTransactions(
             @Valid @RequestBody PaymentTransactionsRequestDto requestDto) {

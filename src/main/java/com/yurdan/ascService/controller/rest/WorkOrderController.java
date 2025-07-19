@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class WorkOrderController {
     /**
      * Создания нарядов
      */
-//    @PreAuthorize("hasAnyAuthority('ENGINEER')")
+    @PreAuthorize("hasAnyAuthority('ENGINEER')")
     @PostMapping("/create-work-order")
     public ResponseEntity<WorkOrderResponseDto> createWorkOrder(
             @Valid @RequestBody CreateWorkOrderDto createWorkOrderDto,
@@ -52,7 +53,7 @@ public class WorkOrderController {
     /**
      * Изменение нарядов.
      */
-//    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('ENGINEER','RECEIVER','ADMINISTRATOR')")
     @PutMapping("/update-work-order/{workOrderId}")
     public ResponseEntity<WorkOrderResponseDto> updateWorkOrder(
             @PathVariable Long workOrderId,
@@ -67,7 +68,7 @@ public class WorkOrderController {
     /**
      * Получение списка нарядов с фильтрацией.
      */
-//    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
+    @PreAuthorize("hasAnyAuthority('ENGINEER', 'RECEIVER', 'ADMINISTRATOR')")
     @GetMapping("/work-orders")
     public ResponseEntity<Page<WorkOrderResponseDto>> getWorkOrders(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate completedDate,
