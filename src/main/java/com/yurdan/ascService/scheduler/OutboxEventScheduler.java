@@ -6,6 +6,7 @@ import com.yurdan.ascService.repository.CompletedWorkRepository;
 import com.yurdan.ascService.repository.OutboxEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,7 +29,10 @@ public class OutboxEventScheduler {
     private final OutboxEventRepository outboxEventRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    private static final String TOPIC = "payment-transactions-topic";
+    // Если Kafka-топик фиксирован, можно хардкодить:
+    @Value("${kafka.payment.topic-in}")
+    private String TOPIC;
+
     private final CompletedWorkRepository completedWorkRepository;
 
     /**

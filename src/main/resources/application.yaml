@@ -63,6 +63,11 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
+kafka:
+  payment:
+    topic-in: "PAY.IN"
+    topic-out: "PAY.OUT"
+
 service_center:
   name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
   phone_number: "89180038448"

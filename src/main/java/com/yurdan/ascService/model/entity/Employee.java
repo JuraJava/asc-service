@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -37,8 +38,8 @@ public class Employee {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
+    @Column(name = "user_id", nullable = false, unique = true)
+    private UUID userId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
