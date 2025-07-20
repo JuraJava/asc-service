@@ -1,4 +1,4 @@
-package com.yurdan.ascService.controller.rest;
+package com.yurdan.ascService.controller.internal;
 
 import com.yurdan.ascService.dto.DeviceDto;
 import com.yurdan.ascService.dto.DeviceSelectDto;
