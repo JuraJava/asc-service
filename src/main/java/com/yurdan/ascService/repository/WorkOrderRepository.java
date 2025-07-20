@@ -4,6 +4,7 @@ import com.yurdan.ascService.model.entity.WorkOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,8 +14,10 @@ import java.util.Optional;
  */
 public interface WorkOrderRepository extends JpaRepository<WorkOrder, Long>, JpaSpecificationExecutor<WorkOrder> {
     /**
-     * Этот метод ищет WorkOrder по ID заявки на ремонт (repairRequestId).
-     * Возвращает результат в Optional, что позволяет избежать null и безопасно обрабатывать отсутствие записи.
+     * Этот метод ищет WorkOrder по ID заявки на ремонт (repairRequestId)
      */
-    Optional<WorkOrder> findByRepairRequestId(Long repairRequestId);
+//    Optional<WorkOrder> findByRepairRequestId(Long repairRequestId);
+
+    List<WorkOrder> findAllByRepairRequestId(Long repairRequestId);
+
 }

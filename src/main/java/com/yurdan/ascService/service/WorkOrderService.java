@@ -196,10 +196,6 @@ public class WorkOrderService {
                 boolean isPrivileged = editor.getRole() == RoleOfEmployee.RECEIVER ||
                         editor.getRole() == RoleOfEmployee.ADMINISTRATOR;
 
-//                if (!isPrivileged && !editor.getId().equals(workOrder.getPerformedBy().getId())) {
-//                    throw new UnauthorizedWorkOrderUpdateException("Только исполнитель или привилегированный персонал может закрыть заказ");
-//                }
-
                 if (!isPrivileged) {
                     throw new UnauthorizedWorkOrderUpdateException("Только привилегированный персонал может закрыть заказ");
                 }
@@ -356,8 +352,9 @@ public class WorkOrderService {
     /**
      * Возвращает заказ по ID заявки на ремонт.
      */
-    public Optional<WorkOrder> getByRepairRequestId(Long repairRequestId) {
-        return workOrderRepository.findByRepairRequestId(repairRequestId);
+
+    public List<WorkOrder> getAllByRepairRequestId(Long repairRequestId) {
+        return workOrderRepository.findAllByRepairRequestId(repairRequestId);
     }
 
     /**

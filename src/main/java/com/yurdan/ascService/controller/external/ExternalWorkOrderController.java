@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,17 +30,17 @@ public class ExternalWorkOrderController {
     /**
      * Получения заказ-наряда по ID заявки на ремонт.
      */
+
     @GetMapping("/work-orders/by-repair-request/{repairRequestId}")
-    public ResponseEntity<WorkOrderResponseDto> getByRepairRequestId(@PathVariable Long repairRequestId) {
-        Optional<WorkOrder> optional = workOrderService.getByRepairRequestId(repairRequestId);
+    public ResponseEntity<List<WorkOrderResponseDto>> getByRepairRequestId(@PathVariable Long repairRequestId) {
+        List<WorkOrder> orders = workOrderService.getAllByRepairRequestId(repairRequestId);
+        List<WorkOrderResponseDto> dtos = orders.stream()
+                .map(workOrderMapper::toDto)
+                .toList();
 
-        if (optional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(dtos);
     }
+
     /**
      * Получения заказ-наряда по его ID.
      */
