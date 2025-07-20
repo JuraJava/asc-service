@@ -1,7 +1,10 @@
 package com.yurdan.ascService.model.entity;
 
+import com.yurdan.ascService.model.enums.NameOfWork;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,8 +33,9 @@ public class CompletedWork {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "name_work", nullable = false)
-    private String name;
+    private NameOfWork nameWork;
 
     @Column(name = "cost_work", nullable = false)
     private BigDecimal cost;
@@ -40,17 +44,10 @@ public class CompletedWork {
     private List<WorkOrder> workOrders;
 
     @Builder(toBuilder = true)
-    public CompletedWork(Long id, String name, BigDecimal cost, List<WorkOrder> workOrders) {
+    public CompletedWork(Long id, NameOfWork nameWork, BigDecimal cost, List<WorkOrder> workOrders) {
         this.id = id;
-        this.name = name;
+        this.nameWork = nameWork;
         this.cost = cost;
         this.workOrders = workOrders;
     }
 }
-
-// Diagnostic
-// ProgramR_Repair
-// Unblocking
-// Replacement_Under_Warranty
-// Replacement_On_Paid_Basis
-// Additional_Work
