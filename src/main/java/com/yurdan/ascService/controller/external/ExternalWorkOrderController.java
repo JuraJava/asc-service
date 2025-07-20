@@ -40,7 +40,6 @@ public class ExternalWorkOrderController {
         WorkOrderResponseDto dto = workOrderMapper.toDto(optional.get());
         return ResponseEntity.ok(dto);
     }
-
     /**
      * Получения заказ-наряда по его ID.
      */
