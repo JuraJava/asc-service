@@ -1,8 +1,8 @@
 package com.yurdan.ascService.controller.internal;
 
-import com.yurdan.ascService.dto.*;
-import com.yurdan.ascService.mapper.RepairRequestMapper;
-import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.dto.RepairRequestDto;
+import com.yurdan.ascService.dto.RepairResponseDto;
+import com.yurdan.ascService.dto.UpdateDefectDto;
 import com.yurdan.ascService.model.enums.RequestStatus;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import com.yurdan.ascService.service.ServiceAscService;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +28,9 @@ import java.time.LocalDate;
 public class RepairRequestController {
 
     private final ServiceAscService serviceAscService;
-    private final RepairRequestMapper repairRequestMapper;
 
-    public RepairRequestController(ServiceAscService serviceAscService, RepairRequestMapper repairRequestMapper) {
+    public RepairRequestController(ServiceAscService serviceAscService) {
         this.serviceAscService = serviceAscService;
-        this.repairRequestMapper = repairRequestMapper;
     }
 
     /**
@@ -43,9 +40,7 @@ public class RepairRequestController {
     @PostMapping("/create-repair-request")
     public ResponseEntity<RepairResponseDto> createRepairRequest(
             @Valid @RequestBody RepairRequestDto dto) {
-        RepairRequest repairRequest = serviceAscService.createRepairRequest(dto);
-        RepairResponseDto responseDto = repairRequestMapper.toDto(repairRequest);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(serviceAscService.createRepairRequest(dto));
     }
 
     /**

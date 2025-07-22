@@ -67,17 +67,19 @@ class ServiceAscServiceTest {
     void createRepairRequest_shouldReturnExistingRequestIfSerialExists() {
         // Arrange
         RepairRequestDto dto = createDto();
-        RepairRequest existing = new RepairRequest();
+        RepairRequest existing = RepairRequest.builder()
+                .id(1L)
+                .serialNumber(dto.getSerialNumber())
+                .build();
         when(repairRequestRepository.findBySerialNumber(dto.getSerialNumber()))
                 .thenReturn(Optional.of(existing));
-        when(repairRequestRepository.save(existing)).thenReturn(existing);
-
+        when(repairRequestMapper.toDto(any(RepairRequest.class)))
+                .thenReturn(RepairResponseDto.builder().serialNumber(existing.getSerialNumber()).build());
         // Act
-        RepairRequest result = serviceAscService.createRepairRequest(dto);
+        RepairResponseDto result = serviceAscService.createRepairRequest(dto);
 
         // Assert
-        assertEquals(existing, result);
-        verify(repairRequestRepository, times(1)).save(existing);
+        assertEquals(existing.getSerialNumber(), result.serialNumber());
     }
 
     @Test
@@ -125,9 +127,11 @@ class ServiceAscServiceTest {
         when(deviceRepository.findById(dto.getDeviceId())).thenReturn(Optional.of(device));
         when(employeeRepository.findById(dto.getAcceptedById())).thenReturn(Optional.of(employee));
         when(repairRequestRepository.save(any(RepairRequest.class))).thenReturn(saved);
+        when(repairRequestMapper.toDto(any(RepairRequest.class)))
+                .thenReturn(RepairResponseDto.builder().id(saved.getId()).build());
 
-        RepairRequest result = serviceAscService.createRepairRequest(dto);
-        assertEquals(saved.getId(), result.getId());
+        RepairResponseDto result = serviceAscService.createRepairRequest(dto);
+        assertEquals(saved.getId(), result.id());
     }
 
     @Test
