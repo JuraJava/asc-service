@@ -61,10 +61,10 @@ public class ServiceAscService {
     }
 
     // Создание заявки на ремонт.
-    public RepairRequest createRepairRequest(RepairRequestDto dto) {
+    public RepairResponseDto createRepairRequest(RepairRequestDto dto) {
         Optional<RepairRequest> existing = repairRequestRepository.findBySerialNumber(dto.getSerialNumber());
         if (existing.isPresent()) {
-            return repairRequestRepository.save(existing.get());
+            return repairRequestMapper.toDto(existing.get());
         }
 
         // Проверяем наличие устройств и сотрудника
@@ -94,7 +94,8 @@ public class ServiceAscService {
                 .acceptedBy(acceptedBy)
                 .build();
 
-        return repairRequestRepository.save(request);
+        RepairRequest savedRequest =  repairRequestRepository.save(request);
+        return repairRequestMapper.toDto(savedRequest);
     }
 
     // Получение списка заявок с фильтрацией
