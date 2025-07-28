@@ -5,15 +5,19 @@ import com.yurdan.ascService.dto.RepairResponseDto;
 import com.yurdan.ascService.dto.UpdateDefectDto;
 import com.yurdan.ascService.exception.DeviceNotFoundException;
 import com.yurdan.ascService.exception.EmployeeNotFoundException;
+import com.yurdan.ascService.exception.RepairRequestNotFoundException;
+import com.yurdan.ascService.exception.ServiceCenterNotFoundException;
 import com.yurdan.ascService.mapper.RepairRequestMapper;
 import com.yurdan.ascService.model.entity.Device;
 import com.yurdan.ascService.model.entity.Employee;
 import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.model.entity.ServiceCenter;
 import com.yurdan.ascService.model.enums.RequestStatus;
 import com.yurdan.ascService.model.enums.TypeOfRepair;
 import com.yurdan.ascService.repository.DeviceRepository;
 import com.yurdan.ascService.repository.EmployeeRepository;
 import com.yurdan.ascService.repository.RepairRequestRepository;
+import com.yurdan.ascService.repository.ServiceCenterRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +36,7 @@ import java.util.Optional;
  * Использует Spring Data JPA Specification для построения динамических запросов.
  * Использует мапперы для преобразования сущностей в DTO.
  */
+ 
 @Slf4j
 @Service
 public class ServiceAscService {
@@ -39,24 +44,18 @@ public class ServiceAscService {
     private final RepairRequestRepository repairRequestRepository;
     private final DeviceRepository deviceRepository;
     private final EmployeeRepository employeeRepository;
+    private final ServiceCenterRepository serviceCenterRepository;
     private final RepairRequestMapper repairRequestMapper;
-
-    @Value("${service-center.name-of-center}")
-    private String nameOfCenter;
-
-    @Value("${service-center.phone-number}")
-    private String phoneNumber;
-
-    @Value("${service-center.address}")
-    private String address;
 
     public ServiceAscService(RepairRequestRepository repairRequestRepository,
                              DeviceRepository deviceRepository,
                              EmployeeRepository employeeRepository,
+                             ServiceCenterRepository serviceCenterRepository,
                              RepairRequestMapper repairRequestMapper) {
         this.repairRequestRepository = repairRequestRepository;
         this.deviceRepository = deviceRepository;
         this.employeeRepository = employeeRepository;
+        this.serviceCenterRepository = serviceCenterRepository;
         this.repairRequestMapper = repairRequestMapper;
     }
 
@@ -67,20 +66,17 @@ public class ServiceAscService {
             return repairRequestMapper.toDto(existing.get());
         }
 
-        // Проверяем наличие устройств и сотрудника
+        // Проверяем наличие устройств, сотрудника, сервисного центра
         Device device = deviceRepository.findById(dto.getDeviceId())
-                .orElseThrow(() -> {
-                    System.out.println("Device not found");
-                    throw new DeviceNotFoundException(dto.getDeviceId());
-                });
+                .orElseThrow(() -> new DeviceNotFoundException(dto.getDeviceId()));
         Employee acceptedBy = employeeRepository.findById(dto.getAcceptedById())
                 .orElseThrow(() -> new EmployeeNotFoundException(dto.getAcceptedById()));
+        ServiceCenter serviceCenter = serviceCenterRepository.findById(dto.getServiceCenterId())
+                .orElseThrow(() -> new ServiceCenterNotFoundException(dto.getServiceCenterId()));
 
         RepairRequest request = RepairRequest.builder()
                 .requestStatus(RequestStatus.ACCEPTED)
-                .nameOfServiceCenter(nameOfCenter)
-                .phoneNumberOfServiceCenter(phoneNumber)
-                .addressOfServiceCenter(address)
+                .serviceCenter(serviceCenter)
                 .typeOfRepair(dto.getTypeOfRepair())
                 .device(device)
                 .serialNumber(dto.getSerialNumber())
@@ -147,8 +143,7 @@ public class ServiceAscService {
         RepairRequest updated = repairRequestRepository.save(repairRequest);
         return repairRequestMapper.toDto(updated);
     }
+
 }
-
-
 
 

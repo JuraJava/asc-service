@@ -1,6 +1,5 @@
 package com.yurdan.ascService.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,15 +47,21 @@ public class SparePart {
 
     @ManyToOne
     @JoinColumn(name = "device_id")
-//    @JsonBackReference
+
     private Device device;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "spareParts")
     private List<WorkOrder> workOrders;
 
     @Builder(toBuilder = true)
-    public SparePart(Long id, String batchNumber, String description, Long remainingQuantity, Long reserveQuantity, BigDecimal cost,
-                     Device device, List<WorkOrder> workOrders) {
+    public SparePart(Long id,
+                     String batchNumber,
+                     String description,
+                     Long remainingQuantity,
+                     Long reserveQuantity,
+                     BigDecimal cost,
+                     Device device,
+                     List<WorkOrder> workOrders) {
         this.id = id;
         this.batchNumber = batchNumber;
         this.description = description;

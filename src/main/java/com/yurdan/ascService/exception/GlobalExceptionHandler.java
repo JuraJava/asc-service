@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.persistence.PersistenceException;
+
+import javax.security.sasl.AuthenticationException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,6 +110,37 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Это перехватит исключение и вернёт 404 вместо 400.
+     */
+    @ExceptionHandler(RepairRequestNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleRepairRequestNotFound(RepairRequestNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                "error", ex.getMessage()
+        ));
+    }
+
+    /**
+     * 403 Forbidden для недостаточных прав.
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(
+                "error", "Access Denied"
+        ));
+    }
+
+    /**
+     * 401 Unauthorized для ошибок аутентификации.
+     * (не обязательно, но полезно, чтобы не ловить их общим handler-ом)
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, String>> handleAuthentication(AuthenticationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                "error", "Unauthorized access"
+        ));
+    }
+
+    /**
      * Общий обработчик для всех остальных исключений
      * Ловит все непредвиденные ошибки, которые не были перехвачены ранее.
      * Выводит стек ошибки в консоль: ex.printStackTrace().
@@ -121,6 +155,7 @@ public class GlobalExceptionHandler {
         Set<Class<?>> badRequestExceptions = Set.of(
                 DeviceNotFoundException.class,
                 EmployeeNotFoundException.class,
+                ServiceCenterNotFoundException.class,
                 EngineerNotFoundException.class,
                 EngineerRoleRequiredException.class,
                 NoPaymentForWarrantyRepairs.class,

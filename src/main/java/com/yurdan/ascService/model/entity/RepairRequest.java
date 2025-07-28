@@ -42,6 +42,10 @@ public class RepairRequest {
     @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
+    @ManyToOne
+    @JoinColumn(name = "id_service_center", nullable = false)
+    private ServiceCenter serviceCenter;
+
     @Column(name = "serial_number", nullable = false, unique = true)
     private String serialNumber;
 
@@ -76,15 +80,6 @@ public class RepairRequest {
     @OneToOne(mappedBy = "repairRequest", cascade = CascadeType.ALL)
     private PaymentTransactions paymentTransactions;
 
-    @Column(name = "service_center_name", nullable = false)
-    private String nameOfServiceCenter;
-
-    @Column(name = "service_center_phone_number", nullable = false)
-    private String phoneNumberOfServiceCenter;
-
-    @Column(name = "service_center_address", nullable = false)
-    private String addressOfServiceCenter;
-
     @Builder(toBuilder = true)
     public RepairRequest(Long id,
                          LocalDateTime createdAt,
@@ -100,11 +95,9 @@ public class RepairRequest {
                          String customerAddress,
                          String customerPhone,
                          Employee acceptedBy,
+                         ServiceCenter serviceCenter,
                          List<WorkOrder> workOrders,
-                         PaymentTransactions paymentTransactions,
-                         String nameOfServiceCenter,
-                         String phoneNumberOfServiceCenter,
-                         String addressOfServiceCenter) {
+                         PaymentTransactions paymentTransactions) {
         this.id = id;
         this.createdAt = createdAt;
         this.typeOfRepair = typeOfRepair;
@@ -119,30 +112,9 @@ public class RepairRequest {
         this.customerAddress = customerAddress;
         this.customerPhone = customerPhone;
         this.acceptedBy = acceptedBy;
+        this.serviceCenter = serviceCenter;
         this.workOrders = workOrders;
         this.paymentTransactions = paymentTransactions;
-        this.nameOfServiceCenter = nameOfServiceCenter;
-        this.phoneNumberOfServiceCenter = phoneNumberOfServiceCenter;
-        this.addressOfServiceCenter = addressOfServiceCenter;
-    }
 
-    public String getNameOfCenter() {return nameOfServiceCenter; }
-
-    public String getPhoneNumber() {
-        return phoneNumberOfServiceCenter;
-    }
-
-    public String getAddress() {
-        return addressOfServiceCenter;
-    }
-
-    public void setNameOfCenter(String nameOfCenter) {this.nameOfServiceCenter = nameOfCenter; }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumberOfServiceCenter = phoneNumber;
-    }
-
-    public void setAddress(String address) {
-        this.addressOfServiceCenter = address;
     }
 }

@@ -25,9 +25,7 @@ public record RepairResponseDto(Long id,
                                 String customerAddress,
                                 String customerPhone,
                                 String acceptedBy,
-                                String nameOfServiceCenter,
-                                String phoneNumber,
-                                String address) {
+                                String serviceCenter) {
 
 }
 

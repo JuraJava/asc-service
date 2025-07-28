@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
 public class PaymentResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,17 +35,14 @@ public class PaymentResult {
     @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false)
     private Currencies currency;
-    //   private String currency;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_payment", nullable = false)
     private TypeOfPayment typeOfPayment;
-    //   private String typeOfPayment;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_status", nullable = false)
     private PaymentTransactionStatus transactionStatus;
-    //   private String transactionStatus;
 
     @Column(name = "received_at", nullable = false)
     private LocalDateTime receivedAt;

@@ -1,4 +1,4 @@
-package com.yurdan.ascService.controller.internal;
+package com.yurdan.ascService.controller.external;
 
 import com.yurdan.ascService.dto.CreateWorkOrderDto;
 import com.yurdan.ascService.dto.UpdateWorkOrderDto;
@@ -18,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 /**
  * Это REST-контроллер, который управляет заказ-нарядами на работу в сервисном центре для внутренних запросов.

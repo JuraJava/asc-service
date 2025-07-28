@@ -31,7 +31,7 @@ public class IntegrationContext {
 
     @Container
     @ServiceConnection
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14.2")
+    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.3")
             .withDatabaseName("asc_database")
             .withUsername("test")
             .withPassword("test")
@@ -39,7 +39,7 @@ public class IntegrationContext {
             .withReuse(true);
 
     @Container
-    private static KafkaContainer kafkaContainer = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.0.9"));
+    private static KafkaContainer kafkaContainer = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.2.1"));
 
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
@@ -51,3 +51,4 @@ public class IntegrationContext {
         registry.add("spring.kafka.bootstrap-servers", kafkaContainer::getBootstrapServers);
     }
 }
+

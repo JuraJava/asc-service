@@ -11,7 +11,12 @@ import org.mapstruct.Mapping;
  * преобразует сущность WorkOrder → в WorkOrderResponseDto для отправки клиенту через API,
  * использует вспомогательные методы из EntityReferenceMapper для обработки связанных сущностей.
  */
-@Mapper(componentModel = "spring", uses = EntityReferenceMapper.class)
+@Mapper(componentModel = "spring", uses = {
+        EntityReferenceMapper.class,
+        EmployeeMapper.class,
+        CompletedWorkMapper.class,
+        SparePartMapper.class
+})
  public interface WorkOrderMapper {
     // DTO → Entity
     @Mapping(source = "repairRequestId", target = "repairRequest", qualifiedByName = "mapRepairRequestById")
@@ -21,8 +26,8 @@ import org.mapstruct.Mapping;
     WorkOrder toEntity(CreateWorkOrderDto dto);
     // Entity → DTO
     @Mapping(source = "repairRequest", target = "repairRequestId", qualifiedByName = "mapRepairRequestToId")
-    @Mapping(source = "completedWorks", target = "completedWorkIds", qualifiedByName = "mapCompletedWorksToId")
-    @Mapping(source = "spareParts", target = "sparePartIds", qualifiedByName = "mapSparePartsToId")
-    @Mapping(source = "performedBy", target = "performedById", qualifiedByName = "mapEmployeeToId")
+    @Mapping(source = "performedBy", target = "performedBy")
+    @Mapping(source = "completedWorks", target = "completedWorks")
+    @Mapping(source = "spareParts", target = "spareParts")
     WorkOrderResponseDto toDto(WorkOrder entity);
 }
