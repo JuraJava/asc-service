@@ -17,18 +17,20 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class WorkOrderResponseDto {
-    private String description;
     private Long id;
     private LocalDateTime createdAt;
     private RepairStatus repairStatus;
     private PaymentStatus paymentStatus;
-    private List<Long> sparePartIds;
-    private List<Long> completedWorkIds;
+    private List<SparePartDto> spareParts;
+    private List<CompletedWorkDto> completedWorks;
     private BigDecimal costOfSparePart;
     private BigDecimal costOfWork;
     private BigDecimal totalCost;
     private BigDecimal salary;
     private Long performedById;
+    private EmployeeDto performedBy;
     private LocalDateTime completedAt;
     private Long repairRequestId;
+    private String description;
+
 }

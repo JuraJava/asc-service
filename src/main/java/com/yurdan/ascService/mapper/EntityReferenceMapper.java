@@ -27,6 +27,14 @@ public class EntityReferenceMapper {
         return device;
     }
 
+    @Named("mapServiceCenterById")
+    public ServiceCenter mapServiceCenter(Long id) {
+        if (id == null) return null;
+        ServiceCenter serviceCenter = new ServiceCenter();
+        serviceCenter.setId(id);
+        return serviceCenter;
+    }
+
     @Named("mapDeviceToId")
     public Long mapDevice(Device device) {
         return device != null ? device.getId() : null;

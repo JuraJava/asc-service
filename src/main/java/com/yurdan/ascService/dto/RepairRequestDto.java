@@ -52,5 +52,8 @@ public class RepairRequestDto {
 
     @NotNull(message = "Accepted by id is required")
     private Long acceptedById;
+
+    @NotNull(message = "Service center id is required")
+    private Long serviceCenterId;
 }
 

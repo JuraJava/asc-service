@@ -1,4 +1,4 @@
-package com.yurdan.ascService.controller.external;
+package com.yurdan.ascService.controller.internal;
 
 import com.yurdan.ascService.dto.WorkOrderResponseDto;
 import com.yurdan.ascService.mapper.WorkOrderMapper;
@@ -17,23 +17,25 @@ import java.util.Optional;
  * Это REST-контроллер, который управляет заказ-нарядами для внешних запросов.
  */
 @RestController
-@RequestMapping("/asc/external/")
-public class ExternalWorkOrderController {
+@RequestMapping("/asc/internal/")
+public class InternalWorkOrderController {
 
     private final WorkOrderService workOrderService;
     private final WorkOrderMapper workOrderMapper;
 
-    public ExternalWorkOrderController(WorkOrderService workOrderService, WorkOrderMapper workOrderMapper) {
+    public InternalWorkOrderController(WorkOrderService workOrderService, WorkOrderMapper workOrderMapper) {
         this.workOrderService = workOrderService;
         this.workOrderMapper = workOrderMapper;
     }
-    /**
-     * Получения заказ-наряда по ID заявки на ремонт.
-     */
 
+    /**
+     * Получение заказ-нарядов по ID заявки на ремонт (с подгрузкой работ и запчастей).
+     */
     @GetMapping("/work-orders/by-repair-request/{repairRequestId}")
     public ResponseEntity<List<WorkOrderResponseDto>> getByRepairRequestId(@PathVariable Long repairRequestId) {
-        List<WorkOrder> orders = workOrderService.getAllByRepairRequestId(repairRequestId);
+        //  Используем метод с JOIN FETCH
+        List<WorkOrder> orders = workOrderService.getAllByRepairRequestIdWithDetails(repairRequestId);
+
         List<WorkOrderResponseDto> dtos = orders.stream()
                 .map(workOrderMapper::toDto)
                 .toList();
@@ -42,11 +44,12 @@ public class ExternalWorkOrderController {
     }
 
     /**
-     * Получения заказ-наряда по его ID.
+     * Получение одного заказ-наряда по его ID (с подгрузкой работ и запчастей).
      */
     @GetMapping("/work-orders/{id}")
     public ResponseEntity<WorkOrderResponseDto> getWorkOrderById(@PathVariable Long id) {
-        Optional<WorkOrder> optional = workOrderService.getById(id);
+        //  Используем метод с JOIN FETCH
+        Optional<WorkOrder> optional = workOrderService.getByIdWithDetails(id);
 
         if (optional.isEmpty()) {
             return ResponseEntity.notFound().build();

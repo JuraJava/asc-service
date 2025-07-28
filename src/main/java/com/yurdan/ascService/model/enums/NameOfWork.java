@@ -8,9 +8,19 @@ public enum NameOfWork {
     UNBLOCKING("Разблокировка"),
     REPLACEMENT_UNDER_WARRANTY("Замена по гарантии");
 
-    private String value;
+    private final String value;
 
     NameOfWork(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
 }

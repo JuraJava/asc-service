@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 014-create-service-center
+      author: Yuri Danilov
+      changes:
+        - createTable:
+            tableName: service_center
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: service_center_name
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: service_center_phone_number
+                  type: VARCHAR(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: service_center_address
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false

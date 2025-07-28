@@ -5,6 +5,7 @@ import com.yurdan.ascService.dto.RepairResponseDto;
 import com.yurdan.ascService.model.entity.Device;
 import com.yurdan.ascService.model.entity.Employee;
 import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.model.entity.ServiceCenter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -19,10 +20,12 @@ public interface RepairRequestMapper {
 
     // DTO → Entity
     @Mapping(source = "deviceId", target = "device", qualifiedByName = "mapDeviceById")
+    @Mapping(source = "serviceCenterId", target = "serviceCenter", qualifiedByName = "mapServiceCenterById")
     @Mapping(source = "acceptedById", target = "acceptedBy", qualifiedByName = "mapEmployeeById")
     RepairRequest toEntity(RepairRequestDto dto);
     // Entity → DTO
     @Mapping(source = "device", target = "device", qualifiedByName = "formatDeviceName")
+    @Mapping(source = "serviceCenter", target = "serviceCenter", qualifiedByName = "formatServiceCenterName")
     @Mapping(source = "acceptedBy", target = "acceptedBy", qualifiedByName = "formatEmployeeName")
     RepairResponseDto toDto(RepairRequest entity);
 
@@ -40,5 +43,13 @@ public interface RepairRequestMapper {
             return null;
         }
         return acceptedBy.getFullName();
+    }
+
+    @Named("formatServiceCenterName")
+    default String formatServiceCenterName(ServiceCenter serviceCenter) {
+        if (serviceCenter == null) {
+            return null;
+        }
+        return serviceCenter.getServiceCenterName();
     }
 }

@@ -1,6 +1,7 @@
 TRUNCATE asc_service.repair_request CASCADE;
 ALTER SEQUENCE asc_service.repair_request_id_seq RESTART WITH 1;
 TRUNCATE asc_service.device CASCADE;
+TRUNCATE asc_service.service_center CASCADE;
 TRUNCATE asc_service.employee CASCADE;
 TRUNCATE asc_service.completed_work CASCADE;
 ALTER SEQUENCE asc_service.completed_work_id_seq RESTART WITH 1;

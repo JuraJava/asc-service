@@ -45,10 +45,10 @@ kafka:
     topic-in: "PAY.IN"
     topic-out: "PAY.OUT"
 
-service_center:
-  name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
-  phone_number: "89180038448"
-  address: "Sochi, Severnaya str., 6"
+#service_center:
+#  name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
+#  phone_number: "89180038448"
+#  address: "Sochi, Severnaya str., 6"
 
 scheduler:
   outbox:

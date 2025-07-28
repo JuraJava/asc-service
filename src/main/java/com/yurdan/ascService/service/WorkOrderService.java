@@ -358,9 +358,21 @@ public class WorkOrderService {
     }
 
     /**
-     * Возвращает заказ по ID самого заказа (Optional).
+     *  Это новый метод с @Query и JOIN FETCH из WorkOrderRepository
      */
+    public List<WorkOrder> getAllByRepairRequestIdWithDetails(Long repairRequestId) {
+        return workOrderRepository.findAllByRepairRequestIdWithDetails(repairRequestId);
+    }
+
+
     public Optional<WorkOrder> getById(Long workOrderId) {
         return workOrderRepository.findById(workOrderId);
+    }
+
+    /**
+     * Возвращает заказ по ID самого заказа (Optional) с подгрузкой JOIN FETCH
+     */
+    public Optional<WorkOrder> getByIdWithDetails(Long workOrderId) {
+        return workOrderRepository.findByIdWithDetails(workOrderId);
     }
 }

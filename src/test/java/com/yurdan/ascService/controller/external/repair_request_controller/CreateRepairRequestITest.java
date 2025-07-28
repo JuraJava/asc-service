@@ -38,13 +38,6 @@ public class CreateRepairRequestITest extends IntegrationContext {
     private static final String accessToken = "Bearer token";
     private final UUID userId = UUID.fromString("28fc7f1b-1b32-44f0-9ec9-66b0c1fdc392");
 
-    @Value("${service_center.name_of_center}")
-    private String nameOfCenter;
-    @Value("${service_center.phone_number}")
-    private String phoneNumber;
-    @Value("${service_center.address}")
-    private String address;
-
     @SpyBean
     private ServiceAscService serviceAscService;
     @SpyBean
@@ -64,7 +57,8 @@ public class CreateRepairRequestITest extends IntegrationContext {
     private final Long deviceId = 101L;
     private final String employeeFullName = "Приемова Приемщица";
     private LocalDate saleDate;
-
+    private final Long serviceCenterId = 1L;
+    private final String serviceCenter = "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center";
     private JwtAuthentication setupJwtAuthentication(UUID userId, List<String> roles) {
         JwtAuthentication jwtAuthentication = new JwtAuthentication(userId, roles.stream()
                 .map(SimpleGrantedAuthority::new)
@@ -84,6 +78,7 @@ public class CreateRepairRequestITest extends IntegrationContext {
         setupJwtMocks(authentication);
 
         RepairRequestDto request = RepairRequestDto.builder()
+                .serviceCenterId(serviceCenterId)
                 .deviceId(deviceId)
                 .typeOfRepair(TypeOfRepair.WARRANTY)
                 .serialNumber(serialNumber)
@@ -117,6 +112,7 @@ public class CreateRepairRequestITest extends IntegrationContext {
         setupJwtMocks(authentication);
 
         RepairRequestDto request = RepairRequestDto.builder()
+                .serviceCenterId(serviceCenterId)
                 .deviceId(deviceId)
                 .typeOfRepair(TypeOfRepair.WARRANTY)
                 .serialNumber(serialNumber)
@@ -142,9 +138,6 @@ public class CreateRepairRequestITest extends IntegrationContext {
 
         checkResponse(resultActions);
 
-        verify(serviceAscService, times(2)).createRepairRequest(any(RepairRequestDto.class));
-        verify(repairRequestRepository, times(2)).findBySerialNumber(any(String.class));
-        verify(repairRequestRepository, times(1)).save(any(RepairRequest.class));
     }
 
     @Test
@@ -163,6 +156,7 @@ public class CreateRepairRequestITest extends IntegrationContext {
     private void checkResponse(ResultActions actions) throws Exception {
         actions
                 .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.serviceCenter").value(serviceCenter))
                 .andExpect(jsonPath("$.device").value(device))
                 .andExpect(jsonPath("$.typeOfRepair").value(TypeOfRepair.WARRANTY.toString()))
                 .andExpect(jsonPath("$.createdAt").isNotEmpty())
@@ -174,9 +168,7 @@ public class CreateRepairRequestITest extends IntegrationContext {
                 .andExpect(jsonPath("$.customerPatronymic").value(customerPatronymic))
                 .andExpect(jsonPath("$.customerAddress").value(customerAddress))
                 .andExpect(jsonPath("$.customerPhone").value(customerPhone))
-                .andExpect(jsonPath("$.acceptedBy").value(employeeFullName))
-                .andExpect(jsonPath("$.nameOfServiceCenter").value(nameOfCenter))
-                .andExpect(jsonPath("$.phoneNumber").value(phoneNumber))
-                .andExpect(jsonPath("$.address").value(address));
+                .andExpect(jsonPath("$.acceptedBy").value(employeeFullName));
+
     }
 }

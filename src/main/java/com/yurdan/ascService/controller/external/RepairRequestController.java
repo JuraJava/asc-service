@@ -1,4 +1,4 @@
-package com.yurdan.ascService.controller.internal;
+package com.yurdan.ascService.controller.external;
 
 import com.yurdan.ascService.dto.RepairRequestDto;
 import com.yurdan.ascService.dto.RepairResponseDto;
