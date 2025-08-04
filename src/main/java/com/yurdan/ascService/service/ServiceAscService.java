@@ -36,7 +36,6 @@ import java.util.Optional;
  * Использует Spring Data JPA Specification для построения динамических запросов.
  * Использует мапперы для преобразования сущностей в DTO.
  */
- 
 @Slf4j
 @Service
 public class ServiceAscService {

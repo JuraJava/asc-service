@@ -63,3 +63,9 @@ eureka:
 app:
   init-data: false
 
+logging:
+  level:
+    com.yurdan.ascService: INFO
+report:
+  service:
+    url: ${REPORT_SERVICE_URL:http://localhost:8083/report/logs}
