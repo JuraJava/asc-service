@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class PaymentEventConsumer {
-    @KafkaListener(topics = "${kafka.payment.topic-out}", groupId = "asc-group")
+//    @KafkaListener(topics = "${kafka.payment.topic-out}", groupId = "asc-group")
+    @KafkaListener(topics = "${kafka.topics.topic-out}", groupId = "asc-group")
     public void handlePaymentEvent(String message) {
         log.info("Получено сообщение из Kafka: {}", message);
     }

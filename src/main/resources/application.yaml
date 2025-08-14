@@ -39,11 +39,23 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    admin:
+      properties:
+        bootstrap.servers: localhost:9092
+
+#kafka:
+#  payment:
+#    topic-in: "PAY.IN"
+#    topic-out: "PAY.OUT"
 
 kafka:
-  payment:
-    topic-in: "PAY.IN"
-    topic-out: "PAY.OUT"
+  topics:
+    topic-in: PAY.IN
+    topic-out: PAY.OUT
+
+payment-service:
+#  url: http://payment-service:8082
+  url: http://localhost:8082
 
 #service_center:
 #  name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"

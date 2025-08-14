@@ -29,7 +29,7 @@ public class OutboxEventScheduler {
     private final OutboxEventRepository outboxEventRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Value("${kafka.payment.topic-in}")
+    @Value("${kafka.topics.topic-in}")
     private String TOPIC;
 
     private final CompletedWorkRepository completedWorkRepository;

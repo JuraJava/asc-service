@@ -26,7 +26,7 @@ public class PaymentResponseConsumer {
     private final ObjectMapper objectMapper;
     private final PaymentResultService paymentResultService;
 
-    @KafkaListener(topics = "${kafka.payment.topic-out}", groupId = "asc-service-response-group")
+    @KafkaListener(topics = "${kafka.topics.topic-out}", groupId = "asc-service-response-group")
     public void listen(String message) {
         try {
             PaymentTransactionResponseKafkaDto dto =
