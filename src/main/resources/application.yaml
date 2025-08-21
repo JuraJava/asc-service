@@ -54,8 +54,8 @@ kafka:
     topic-out: PAY.OUT
 
 payment-service:
-#  url: http://payment-service:8082
-  url: http://localhost:8082
+#  url: http://payment-service:8282
+  url: http://localhost:8282
 
 #service_center:
 #  name_of_center: "IP Zaharyan E.A. 'Samsung Mobile Equipment Service Center'"
