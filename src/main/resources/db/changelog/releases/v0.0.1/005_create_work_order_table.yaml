@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 004-create-work-order
+      id: 005-create-work-order
       author: Yuri Danilov
       changes:
         - createTable:

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 013-create-payment-result
+      id: 014-create-payment-result
       author: Yuri Danilov
       changes:
         - createTable:

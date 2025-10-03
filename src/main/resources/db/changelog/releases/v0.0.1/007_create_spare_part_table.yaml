@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 006-create-spare-part
+      id: 007-create-spare-part
       author: Yuri Danilov
       changes:
         - createTable:

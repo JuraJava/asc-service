@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 012-create-partitioned-outbox-event
+      id: 013-create-partitioned-outbox-event
       author: Yuri Danilov
       preConditions:
         - onFail: MARK_RAN

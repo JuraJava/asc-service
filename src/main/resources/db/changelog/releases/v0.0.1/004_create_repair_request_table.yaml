@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 003-create-repair-request
+      id: 004-create-repair-request
       author: Yuri Danilov
       changes:
         - createTable:

@@ -1,6 +1,6 @@
 databaseChangeLog:
     - changeSet:
-        id: 008-create-spare-part-work-order
+        id: 009-create-spare-part-work-order
         author: Yuri Danilov
         changes:
             - createTable:

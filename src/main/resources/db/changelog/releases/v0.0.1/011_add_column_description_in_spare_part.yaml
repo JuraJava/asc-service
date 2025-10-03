@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 010_add_column_description_in_spare_part
+      id: 011_add_column_description_in_spare_part
       author: Yaroslav Novikov
       changes:
         - sql:

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 005-create-payment-transactions
+      id: 006-create-payment-transactions
       author: Yuri Danilov
       changes:
         - createTable:

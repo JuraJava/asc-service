@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 014-create-service-center
+      id: 003-create-service-center
       author: Yuri Danilov
       changes:
         - createTable:
