@@ -5,7 +5,6 @@ import com.yurdan.ascService.dto.RepairResponseDto;
 import com.yurdan.ascService.dto.UpdateDefectDto;
 import com.yurdan.ascService.exception.DeviceNotFoundException;
 import com.yurdan.ascService.exception.EmployeeNotFoundException;
-import com.yurdan.ascService.exception.RepairRequestNotFoundException;
 import com.yurdan.ascService.exception.ServiceCenterNotFoundException;
 import com.yurdan.ascService.mapper.RepairRequestMapper;
 import com.yurdan.ascService.model.entity.Device;
@@ -20,7 +19,6 @@ import com.yurdan.ascService.repository.RepairRequestRepository;
 import com.yurdan.ascService.repository.ServiceCenterRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -142,7 +140,6 @@ public class ServiceAscService {
         RepairRequest updated = repairRequestRepository.save(repairRequest);
         return repairRequestMapper.toDto(updated);
     }
-
 }
 
 

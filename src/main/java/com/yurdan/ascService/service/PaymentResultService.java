@@ -1,6 +1,5 @@
 package com.yurdan.ascService.service;
 
-
 import com.yurdan.ascService.model.entity.PaymentResult;
 import com.yurdan.ascService.repository.PaymentResultRepository;
 import lombok.RequiredArgsConstructor;

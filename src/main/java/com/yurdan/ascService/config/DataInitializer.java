@@ -14,7 +14,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "app", value = "init-data", havingValue = "true")
 public class DataInitializer {
+
     private static final Random RANDOM = new Random();
     private final DeviceRepository deviceRepository;
     private final SparePartRepository sparePartRepository;
