@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-//public record DeviceDto(Long id, String name, DeviceColor color) {
-//}
 @Getter
 @Setter
 @AllArgsConstructor

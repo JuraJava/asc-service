@@ -5,8 +5,6 @@ import com.yurdan.ascService.model.enums.TypeOfPayment;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 /**
  * Класс — это DTO, который используется для входящего запроса на создание платёжной транзакции в системе  через API.
  * Обычно его получает контроллер от клиента (UI или другой сервис).
