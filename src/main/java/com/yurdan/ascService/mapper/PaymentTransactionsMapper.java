@@ -2,11 +2,9 @@ package com.yurdan.ascService.mapper;
 
 import com.yurdan.ascService.dto.PaymentTransactionsRequestDto;
 import com.yurdan.ascService.dto.PaymentTransactionsResponseDto;
-import com.yurdan.ascService.model.entity.Employee;
 import com.yurdan.ascService.model.entity.PaymentTransactions;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
 /**
  * Этот интерфейс определяет правила, как маппить (конвертировать) объекты между слоями приложения.
@@ -25,14 +23,6 @@ public interface PaymentTransactionsMapper {
     @Mapping(source = "acceptedBy", target = "acceptedBy", qualifiedByName = "mapEmployeeToId")
 //    @Mapping(source = "acceptedBy", target = "acceptedBy", qualifiedByName = "formatEmployeeName")
     PaymentTransactionsResponseDto toDto(PaymentTransactions entity);
-
-//    @Named("formatEmployeeName")
-//    default String formatEmployeeName(Employee acceptedBy) {
-//        if (acceptedBy == null) {
-//            return null;
-//        }
-//        return acceptedBy.getFullName();
-//    }
 
 }
 

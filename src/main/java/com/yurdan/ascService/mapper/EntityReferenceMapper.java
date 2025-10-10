@@ -1,6 +1,11 @@
 package com.yurdan.ascService.mapper;
 
-import com.yurdan.ascService.model.entity.*;
+import com.yurdan.ascService.model.entity.CompletedWork;
+import com.yurdan.ascService.model.entity.Device;
+import com.yurdan.ascService.model.entity.Employee;
+import com.yurdan.ascService.model.entity.RepairRequest;
+import com.yurdan.ascService.model.entity.ServiceCenter;
+import com.yurdan.ascService.model.entity.SparePart;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
